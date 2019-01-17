@@ -1,0 +1,337 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	
+	<!-- 
+		Common modules fragment 
+	-->
+	<th:block th:fragment="common_module">	
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<link rel="shortcut icon" type="image/png" href="favicon"/>
+		
+		<!--/* CSS Libraries */-->
+		<link th:href="@{/lib/angular-loading-bar/loading-bar.min.css}" rel="stylesheet">
+		<link th:href="@{/lib/animate.css/animate.min.css}" rel="stylesheet">
+		<link th:href="@{/lib/material-design-iconic-font/css/material-design-iconic-font.min.css}" rel="stylesheet">
+		<link th:href="@{/lib/material-design-color-palette/material-design-color-palette.min.css}" rel="stylesheet">
+
+		<!--/* Custom CSS */-->
+		<link rel="stylesheet" th:href="@{/css/app.min.1.css}" id="app-level"/>
+		<link rel="stylesheet" th:href="@{/css/app.min.2.css}" />
+		<link rel="stylesheet" th:href="@{/css/demo.css}" />
+		
+		<!--/* JQuery */-->
+		<script th:src="@{/lib/jquery/jquery-2.2.3.min.js}"></script>
+		<!-- Placeholder for IE9 -->
+		<!--[if IE 9 ]>
+			<script th:src="@{/lib/jquery-placeholder/jquery.placeholder.min.js}"></script>
+		<![endif]-->
+				
+		<!--/* Angular */-->
+		<script th:src="@{lib/angular/angular.min.js}"></script>
+		<script th:src="@{lib/angular/angular-resource.min.js}"></script>
+		<script th:src="@{lib/angular/angular-animate.min.js}"></script>
+		<script th:src="@{lib/ui-router/angular-ui-router.min.js}"></script>
+		<script th:src="@{lib/angular-loading-bar/loading-bar.min.js}"></script>
+		<script th:src="@{lib/angular-filter/angular-filter.min.js}"></script>
+		<script th:src="@{lib/sockjs/sockjs.min.js}"></script>
+		<script th:src="@{lib/stomp-websocket/stomp.min.js}"></script>
+		<script th:src="@{/lib/angular-websocket/angular-websocket.min.js}"></script>
+		
+		<script th:src="@{lib/angular-dynamic-locale/tmhDynamicLocale.min.js}"></script>
+		
+		<!--/* Angular Modules */-->
+		<script th:src="@{/lib/oclazyload/ocLazyLoad.min.js}"></script>
+		<script th:src="@{/lib/angular-ui-bootstrap/ui-bootstrap-tpls-1.3.2.min.js}"></script>
+	</th:block>
+</head>
+<body>
+	<!-- 
+		Header fragment 
+	-->
+	<th:block th:fragment="header">
+		<ul class="header-inner clearfix">
+		   <li id="menu-trigger" data-target="left_sidebar" data-toggle-sidebar data-model-left="mactrl.sidebarToggle.left" data-ng-class="{ 'open': mactrl.sidebarToggle.left === true }">
+			   <div class="line-wrap" tooltip-placement="bottom" ng-attr-uib-tooltip="{{mactrl.menuTooltip()}}">
+			      <div class="line top"></div>
+			      <div class="line center"></div>
+			      <div class="line bottom"></div>
+			   </div>
+		   </li>
+		   <li class="hidden-xs">
+		   		<a class="m-l-10" data-ui-sref="home" data-ng-click="mactrl.sidebarStat($event)" style="margin-right: 10px;">
+		   			<img src="image/micampus-logo.png" style="height:60px; margin-top:-14px; margin-bottom:-10px;" alt="">
+		   		</a> 
+   		   	</li>
+<!-- 		   <li class="logo hidden-xs"><a data-ui-sref="home" data-ng-click="mactrl.sidebarStat($event)">MiDM Admin</a></li> -->
+		   <li class="pull-right">
+		      <ul class="top-menu" ng-if="false">
+<!-- 				<li id="toggle-width"> -->
+<!--                 	<div class="toggle-switch"> -->
+<!--                     	<input id="tw-switch" type="checkbox" hidden="hidden" data-change-layout="mactrl.layoutType"> -->
+<!--                     	<label for="tw-switch" class="ts-helper"></label> -->
+<!--                 	</div> -->
+<!--             	</li> -->
+             	<li id="top-search"><a href="" data-ng-click="hctrl.openSearch()" tooltip-placement="bottom" th:attr="uib-tooltip=#{search}"><i class="tm-icon zmdi zmdi-search"></i></a></li>
+		        <li class="dropdown" uib-dropdown ng-hide="true">
+		            <a uib-dropdown-toggle href="" tooltip-placement="bottom" th:attr="uib-tooltip=#{message}"><i class="tm-icon zmdi zmdi-email"></i></a>
+		            <div class="dropdown-menu dropdown-menu-lg stop-propagate pull-right">
+		               <div class="listview">
+		                  <div class="lv-header">[(#{message})]</div>
+		                  <div class="clearfix"></div>
+		                  <a class="lv-footer" href="">[(#{view_all})]</a>
+		               </div>
+		            </div>
+		         </li>
+		         <li class="dropdown" uib-dropdown>
+		            <a uib-dropdown-toggle href="" tooltip-placement="bottom" th:attr="uib-tooltip=#{notification}"><i class="tm-icon zmdi zmdi-notifications"></i></a>
+		            <div class="dropdown-menu dropdown-menu-lg stop-propagate pull-right">
+		               <div class="listview" id="notifications">
+		                  <div class="lv-header">
+		                     [(#{notification})]
+		                     <ul class="actions">
+		                        <li><a href="" data-ng-click="hctrl.clearNotification($event)"><i class="zmdi zmdi-check-all"></i></a></li>
+		                     </ul>
+		                  </div>
+		                  <div class="clearfix"></div>
+		                  <a class="lv-footer" href="">[(#{view_all})]</a>
+		               </div>
+		            </div>
+		         </li>
+		         <li class="dropdown hidden-xs" uib-dropdown ng-hide="true">
+		            <a uib-dropdown-toggle href="" tooltip-placement="bottom" th:attr="uib-tooltip=#{task}">
+		            	<i class="tm-icon zmdi zmdi-view-list-alt"></i>
+					</a>
+		            <div class="dropdown-menu pull-right dropdown-menu-lg">
+						<div class="listview">
+		                	<div class="lv-header">[(#{task})]</div>
+		            		<div class="clearfix"></div>
+		            		<a class="lv-footer" href="">[(#{view_all})]</a>
+		            	</div>
+		            </div>
+		         </li>
+		      	 <li class="hidden-xs" data-target="right_sidebar" data-toggle-sidebar data-model-right="mactrl.sidebarToggle.right" data-ng-class="{ 'open': mactrl.sidebarToggle.right === true }" th:if="${!user.hasRole('ROLE_SUPERVISOR')}">
+		      	 	<a href="" tooltip-placement="bottom" th:attr="uib-tooltip=#{search_student}"><i class="tm-icon zmdi zmdi-folder-person"></i></a>
+		      	 </li>
+		   		</ul>
+			</li>
+		</ul>
+		<!-- Top Search Content -->
+		<div id="top-search-wrap" >
+		   <div class="tsw-inner"><i id="top-search-close" class="zmdi zmdi-arrow-left" data-ng-click="hctrl.closeSearch()"></i> <input type="text" data-ng-blur="hctrl.closeSearch()"></div>
+		</div>
+	</th:block>	
+
+	<!-- 
+		Sidebar fragment 
+	-->
+	<th:block th:fragment="sidebar">
+	    <aside id="sidebar" data-ng-include = "'fragment/layout/leftSidebar'" data-ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
+	    <aside id="chat" data-ng-include = "'fragment/layout/rightSidebar'" data-ng-class="{ 'toggled': mactrl.sidebarToggle.right === true }"></aside>
+	</th:block>
+	
+	<!-- 
+		Left sidebar menu fragment 
+	-->
+	<th:block th:fragment="leftSidebar">
+		<div class="sidebar-inner c-overflow">
+		   <div class="profile-menu">
+		      <a href="" toggle-submenu>
+		         <div class="profile-pic"><img src="profile" alt=""></div>
+		         <div class="profile-info">[(${user.name})] <i class="zmdi zmdi-caret-down"></i></div>
+		      </a>
+		      <ul class="main-menu">
+		         <li><a data-ui-sref="user.profile.about" data-ng-click="mactrl.sidebarStat($event)"><i class="zmdi zmdi-account"></i> [(#{profile})]</a></li>
+<!-- 		         <li><a href="" data-ng-click="hctrl.clearLocalStorage()"><i class="zmdi zmdi-delete"></i> Clear Local Storage</a></li> -->
+		         <li><a data-ui-sref="user.profile.settings" data-ng-click="mactrl.sidebarStat($event)"><i class="zmdi zmdi-settings"></i> [(#{settings})]</a></li>
+		         <li><a href="" ng-click="mactrl.confirmLogout()"><i class="zmdi zmdi-time-restore"></i>[(#{logout})]</a></li>
+		      </ul>
+		   </div>
+		   <ul class="main-menu">
+		      <li data-ui-sref-active="active"><a data-ui-sref="home" data-ng-click="mactrl.sidebarStat($event)"><i class="zmdi zmdi-home"></i> [[#{home}]]</a></li>
+		      <li class="sub-menu" data-ng-class="{ 'active toggled': mactrl.$state.includes('headers') }" th:if="${user.hasRole('ROLE_ADMIN') || !user.hasRole('ROLE_SUPERVISOR')}">
+		      	  <a href="" toggle-submenu><i class="zmdi zmdi-accounts"></i> [[#{user}]]</a>
+			      <ul>
+			         <li><a data-ui-sref-active="active" data-ui-sref="account.administrator" data-ng-click="mactrl.sidebarStat($event)">[[#{administrator}]]</a></li>
+			         <li><a data-ui-sref-active="active" data-ui-sref="account.teacher" data-ng-click="mactrl.sidebarStat($event)">[[#{teacher}]]</a></li>
+			         <li><a data-ui-sref-active="active" data-ui-sref="account.nurse" data-ng-click="mactrl.sidebarStat($event)">[[#{nurse}]]</a></li>
+<!-- 			         <li><a data-ui-sref-active="active" data-ui-sref="account.student" data-ng-click="mactrl.sidebarStat($event)">[[#{student}]]</a></li> -->
+			      </ul>
+		      </li>
+		      <li data-ui-sref-active="active" th:if="${user.hasRole('ROLE_SUPERVISOR')}"><a data-ui-sref="account.administrator" data-ng-click="mactrl.sidebarStat($event)"><i class="zmdi zmdi-face"></i> [[#{administrator}]]</a></li>
+		      <li data-ui-sref-active="active" th:if="${!user.hasRole('ROLE_SUPERVISOR')}"><a data-ui-sref="account.student" data-ng-click="mactrl.sidebarStat($event)"><i class="zmdi zmdi-face"></i> [[#{student}]]</a></li>
+		      <li data-ui-sref-active="active" th:if="${!user.hasRole('ROLE_SUPERVISOR')}"><a data-ui-sref="mikio.list" data-ng-click="mactrl.sidebarStat($event)"><i class="zmdi zmdi-desktop-windows"></i> [[#{mikio}]]</a></li>
+		      <li data-ui-sref-active="active" th:if="${!user.hasRole('ROLE_SUPERVISOR')}"><a data-ui-sref="measurement.list" data-ng-click="mactrl.sidebarStat($event)"><i class="zmdi zmdi-ruler"></i> [[#{measurement}]]</a></li>
+		      <li data-ui-sref-active="active" th:if="${!user.hasRole('ROLE_SUPERVISOR')}"><a data-ui-sref="disease.list" data-ng-click="mactrl.sidebarStat($event)"><i class="zmdi zmdi-hospital"></i> [[#{disease}]]</a></li>
+		      <li data-ui-sref-active="active" th:if="${!user.hasRole('ROLE_SUPERVISOR')}"><a data-ui-sref="reports.view" data-ng-click="mactrl.sidebarStat($event)"><i class="zmdi zmdi-case-download"></i> [[#{report}]]</a></li>
+
+<!-- 		      <li class="sub-menu" data-ng-class="{ 'active toggled': mactrl.$state.includes('widgets') }"><a href="" toggle-submenu><i class="zmdi zmdi-ruler"></i> [[#{measurement}]]</a> -->
+<!-- 			      <ul> -->
+<!-- 			         <li><a data-ui-sref-active="active" data-ui-sref="measurement.weightHeight" data-ng-click="mactrl.sidebarStat($event)">[[#{weight_height}]]</a></li> -->
+<!-- 			         <li><a data-ui-sref-active="active" data-ui-sref="measurement.vision" data-ng-click="mactrl.sidebarStat($event)">[[#{vision_grade}]]</a></li> -->
+<!-- 			      </ul> -->
+<!-- 		      </li> -->
+
+<!-- 		      <li class="sub-menu" data-ng-class="{ 'active toggled': mactrl.$state.includes('tables') }"><a href="" toggle-submenu><i class="zmdi zmdi-hospital"></i> [[#{disease}]]</a> -->
+<!-- 			      <ul> -->
+<!-- 			         <li><a data-ui-sref-active="active" data-ui-sref="disease.internal" data-ng-click="mactrl.sidebarStat($event)">[[#{internal_disease}]]</a></li> -->
+<!-- 			         <li><a data-ui-sref-active="active" data-ui-sref="disease.surgery" data-ng-click="mactrl.sidebarStat($event)">[[#{surgery}]]</a></li> -->
+<!-- 			      </ul> -->
+<!-- 		      </li> -->
+		      <li class="sub-menu" data-ng-class="{ 'active toggled': mactrl.$state.includes('charts') }"  th:if="${!user.hasRole('ROLE_SUPERVISOR')}"><a href="" toggle-submenu><i class="zmdi zmdi-view-list"></i>[[#{board}]]</a>
+			      <ul>
+			         <li th:if="${user.hasRole('ROLE_ADMIN')}">
+			         	<a data-ui-sref-active="active" data-ui-sref="board.list" data-ng-click="mactrl.sidebarStat($event)">[[#{boards}]]</a>
+			         </li>
+			         <li>
+			         	<a data-ui-sref-active="active" data-ui-sref="board.contents" data-ng-click="mactrl.sidebarStat($event)">[[#{contents}]]</a>
+			         </li>
+			      </ul>
+		      </li>
+		      <li class="divider"></li>
+		      <li data-ui-sref-active="active" th:if="${!user.hasRole('ROLE_SUPERVISOR')}"><a data-ui-sref="campus.profile.about" data-ng-click="mactrl.sidebarStat($event)"><i class="zmdi zmdi-local-library"></i> [[#{campus_profile}]]</a></li>
+		      <li data-ui-sref-active="active" th:if="${user.hasRole('ROLE_SUPERVISOR')}"><a data-ui-sref="campus.list" data-ng-click="mactrl.sidebarStat($event)"><i class="zmdi zmdi-local-library"></i> [[#{campuses}]]</a></li>
+		      <li class="divider"></li>
+		      <li class="sub-menu" data-ng-class="{ 'active toggled': mactrl.$state.includes('user-interface') }" th:if="${user.hasRole('ROLE_SUPERVISOR')}">
+		      	  <a href="" toggle-submenu><i class="zmdi zmdi-settings"></i>[[#{system}]]</a>
+			      <ul>
+			         <li><a data-ui-sref-active="active" data-ui-sref="system.locale" data-ng-click="mactrl.sidebarStat($event)">[[#{locale}]]</a></li>
+			         <li><a data-ui-sref-active="active" data-ui-sref="system.altLocale" data-ng-click="mactrl.sidebarStat($event)">[[#{alt_locale}]]</a></li>
+			         <li><a data-ui-sref-active="active" data-ui-sref="system.propertyCategory" data-ng-click="mactrl.sidebarStat($event)">[[#{property_category}]]</a></li>
+			         <li><a data-ui-sref-active="active" data-ui-sref="system.property" data-ng-click="mactrl.sidebarStat($event)">[[#{property}]]</a></li>
+			         <li><a data-ui-sref-active="active" data-ui-sref="system.resource" data-ng-click="mactrl.sidebarStat($event)">[[#{resource}]]</a></li>
+			         <li><a data-ui-sref-active="active" data-ui-sref="system.bmi" data-ng-click="mactrl.sidebarStat($event)">[[#{bmi}]]</a></li>
+			      </ul>
+		      </li>
+		   </ul>
+		</div>		
+	</th:block>	
+
+	<!-- 
+		Right sidebar fragment 
+	-->
+	<th:block th:fragment="rightSidebar">
+		<div class="chat-search">
+		   <div class="fg-line"><input type="text" class="form-control" th:placeholder="#{search_users}" ng-model="nameFilter" ng-change="searchUsers(nameFilter)"></div>
+		</div>
+		<div class="listview">
+			<a class="lv-item" ng-repeat="teacher in searchedAdmins | unique:'teacher.uid'">
+		        <div class="media">
+		            <div class="pull-left p-relative">
+		                <img class="lv-img-sm" ng-src="profile/{{teacher.uid}}" alt="">
+		            </div>
+		            <div class="media-body">
+		                <div class="lv-title">{{teacher.name}}</div>
+		                <small class="lv-small">[(#{administrator})]</small>
+		            </div>
+		        </div>
+		    </a>			
+		</div>	
+		<div class="listview">
+			<a class="lv-item" ng-repeat="teacher in searchedTeachers | unique:'teacher.uid'">
+		        <div class="media">
+		            <div class="pull-left p-relative">
+		                <img class="lv-img-sm" ng-src="profile/{{teacher.uid}}" alt="">
+		            </div>
+		            <div class="media-body">
+		                <div class="lv-title">{{teacher.name}}</div>
+		                <small class="lv-small">[(#{teacher})]: {{teacher.properties.classId}}</small>
+		            </div>
+		        </div>
+		    </a>			
+		</div>	
+		<div class="listview">
+			<a class="lv-item" ng-repeat="teacher in searchedNurses | unique:'teacher.uid'">
+		        <div class="media">
+		            <div class="pull-left p-relative">
+		                <img class="lv-img-sm" ng-src="profile/{{teacher.uid}}" alt="">
+		            </div>
+		            <div class="media-body">
+		                <div class="lv-title">{{teacher.name}}</div>
+		                <small class="lv-small">[(#{nurse})]</small>
+		            </div>
+		        </div>
+		    </a>			
+		</div>	
+		<div class="listview">
+			<a class="lv-item" ng-repeat="student in searchedStudents | unique:'student.userUid'" ng-click="openStudentDetails(student)">
+		        <div class="media">
+		            <div class="pull-left p-relative">
+		                <img class="lv-img-sm" ng-src="profile/{{student.userUid}}" alt="">
+		            </div>
+		            <div class="media-body">
+		                <div class="lv-title">{{student.name}}</div>
+		                <small class="lv-small">[(#{student})]: {{student.registerProperties.classId}} / {{student.registerProperties.seat}}</small>
+		            </div>
+		        </div>
+		    </a>			
+		</div>	
+	</th:block>	
+
+	<!-- 
+		Footer fragment 
+	-->
+	<th:block th:fragment="footer">
+		MiHealth [(${buildVersion})] | Copyright &copy; 2016 MiTAC Communication Co., Ltd.
+		<ul class="f-menu">
+		   <li><a data-ui-sref="home">[(#{home})]</a></li>
+		   <li><a href="">[(#{terms})]</a></li>
+		   <li><a href="">[(#{privacy})]</a></li>
+		   <li><a href="" data-ng-click="mactrl.clearLocalStorage()">[(#{clear_local_storage})]</a></li>
+		   <li><a href="">[(#{contact})]</a></li>
+			<li>
+				<div class="btn-group dropup" style="margin-top:-4px;box-shadow:none;" uib-dropdown>
+				    <button type="button" class="btn btn-default" style="background:transparent;"uib-dropdown-toggle> <i class="zmdi zmdi-globe-alt zmdi-hc-fw"></i> {{curLocale.displayName}}&nbsp;<span class="caret"></span></button>
+				    <ul class="dropdown-menu">
+				        <li data-ng-repeat="w in locales"><a href="" ng-click="setCurLocale($index)">{{ w.displayName }}</a></li>
+				    </ul>
+				</div>
+			</li>
+		</ul>
+	</th:block>	
+
+	<!-- 
+		IE Warning common fragment 
+	-->
+	<th:block th:fragment="ie_warning">
+		<!-- Older IE warning message -->
+		<!--[if lt IE 9]>
+			<div class="ie-warning">
+				<h1 class="c-white">Warning!!</h1>
+				<p>You are using an outdated version of Internet Explorer, please upgrade <br/>to any of the following web browsers to access this website.</p>
+				<div class="iew-container">
+					<ul class="iew-download">
+						<li>
+							<a href="http://www.google.com/chrome/">
+								<img src="image/browsers/chrome.png" alt="">
+								<div>Chrome</div>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.mozilla.org/en-US/firefox/new/">
+								<img src="image/browsers/firefox.png" alt="">
+								<div>Firefox</div>
+							</a>
+						</li>
+						<li>
+							<a href="http://www.opera.com">
+								<img src="image/browsers/opera.png" alt="">
+								<div>Opera</div>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<p>Sorry for the inconvenience!</p>
+			</div>
+		<![endif]-->
+	</th:block>
+
+	<th:block th:fragment="fragment">
+	</th:block>	
+</body>
+</html>

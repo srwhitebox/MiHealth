@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="card" id="profile-main" data-ng-controller="campusCtrl as pctrl" ng-init="init()">
+        <div class="pm-overview c-overflow">
+            <div class="pmo-pic">
+                <div class="p-relative">
+                    <a href="" ngf-select="upload($file, 'square')" ngf-multiple="true" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="100MB" ngf-resize="{width: 512, height: 512, centerCrop:true}">
+                        <img class="img-responsive" ng-src="{{campusProfile}}" alt="">
+                    </a>
+                    <a href="" class="pmop-edit" ngf-select="upload($file, 'square')" ngf-multiple="true" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="100MB" ngf-resize="{width: 512, height: 512}">
+                        <i class="zmdi zmdi-camera"></i> <span class="hidden-xs">[(#{update_logo_square})]</span>
+                    </a>
+                </div>
+
+                <div class="pmo-stat">
+                    <h2 class="m-0 c-white">{{campus.id}}</h2>
+                    {{campus.name}}
+                </div>
+            </div>
+
+            <div class="pmo-block pmo-contact hidden-xs">
+                <h2>[(#{contact})]</h2>
+                <ul>
+                    <li><i class="zmdi zmdi-phone"></i> {{campus.properties.tel}}</li>
+                    <li><i class="zmdi zmdi-email"></i> {{campus.properties.email}}</li>
+                    <li><i class="zmdi zmdi-pin"></i> {{campus.properties.address}}</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="pm-body clearfix">
+            <ul class="tab-nav tn-justified" data-ng-include="'fragment/profile-menu/campus'"></ul>
+            <data ui-view></data>
+        </div>
+    </div>
+</div>

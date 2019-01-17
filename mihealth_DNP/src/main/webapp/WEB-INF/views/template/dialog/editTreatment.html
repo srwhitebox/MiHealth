@@ -1,0 +1,46 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<body>
+	<th:block th:fragment="dialog">
+		<div class="modal-header">
+			<h4 class="modal-title">[(#{treatment_info})]</h4>
+		</div>
+		<div class="modal-body">
+			<div class="row">
+                <div class="col-sm-6">
+					<div class="form-group fg-line">
+					    <label for="classId">[(#{class_id})]</label>
+					    <input type="text" class="form-control input-sm" id="classId" ng-readonly = "true" ng-model="reference.disease.registerProperties.classId">
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group fg-line">
+					    <label for="seatNo">[(#{seat_no})]</label>
+					    <input type="text" class="form-control input-sm" id="seatNo" ng-readonly = "true" ng-model="reference.disease.registerProperties.seat">
+					</div>
+				</div>
+			</div>
+			<div class="form-group fg-line">
+			    <label for="name">[(#{name})]</label>
+			    <input type="text" class="form-control input-sm" id="name" ng-readonly = "true" ng-model="reference.disease.name">
+			</div>
+			<div class="form-group fg-line">
+			    <label for="name">[(#{disease})]</label>
+			    <input type="text" class="form-control input-sm" id="disease" ng-readonly = "true" ng-model="reference.diseaseName">
+			</div>
+			<div class="form-group fg-line">
+			    <label for="treatment">[(#{treatment})]</label>
+				<textarea class="form-control" rows="5" id="treatment" th:placeholder="#{placeholder_treatment}" ng-model="reference.treatment"></textarea>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-link" ng-click="cancel()">[(#{cancel})]</button>
+			<button class="btn btn-link" ng-click="ok()">[(#{save})]</button>
+		</div>
+	</th:block>	
+</body>
+</html>

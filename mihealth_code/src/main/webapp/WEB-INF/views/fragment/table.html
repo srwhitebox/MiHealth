@@ -1,0 +1,118 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<th:block th:fragment="action">
+		<ul class="actions" ng-if="!w.$edit">
+			<li>
+				<a href="" ng-click="w.$edit = true" tooltip-placement="bottom" th:attr="uib-tooltip=#{edit}">
+					<i class="zmdi zmdi-edit"></i>
+				</a>
+			</li>
+			<li>
+				<a href="" ng-click="remove(w)" tooltip-placement="bottom" th:attr="uib-tooltip=#{remove}">
+					<i class="zmdi zmdi-close"></i>
+				</a>
+			</li>
+		</ul>
+		<ul class="actions" ng-if="w.$edit">
+			<li>
+				<a href="" ng-click="w.$edit = false; save(w)" tooltip-placement="bottom" th:attr="uib-tooltip=#{save}"> 
+					<i class="zmdi zmdi-check"></i>
+				</a>
+			</li>
+			<li>
+				<a href="" ng-click="w.$edit=false" tooltip-placement="bottom" th:attr="uib-tooltip=#{close}">
+					<i class="zmdi zmdi-close"></i>
+				</a>
+			</li>
+		</ul>
+	</th:block>
+	
+	<th:block th:fragment="account_action">
+       	<ul class="actions">
+			<li>
+				<a href="" ng-click="editAccount(w, null, 'new')" tooltip-placement="bottom" th:attr="uib-tooltip=#{add_account}">
+					<i class="zmdi zmdi-account-add"></i>
+				</a>
+			</li>
+			<li>
+				<a href="" ng-click="editUser(w)" tooltip-placement="bottom" th:attr="uib-tooltip=#{edit}">
+					<i class="zmdi zmdi-edit"></i>
+				</a>
+			</li>
+			<li>
+				<a href="" ng-click="remove(w)" tooltip-placement="bottom" th:attr="uib-tooltip=#{remove}">
+					<i class="zmdi zmdi-close"></i>
+				</a>
+			</li>
+		</ul>
+	</th:block>
+
+	<th:block th:fragment="mikio_action">
+       	<ul class="actions">
+			<li>
+				<a href="" ng-click="editMikio(w)" tooltip-placement="bottom" th:attr="uib-tooltip=#{edit}">
+					<i class="zmdi zmdi-edit"></i>
+				</a>
+			</li>
+			<li>
+				<a href="" ng-click="remove(w)" tooltip-placement="bottom" th:attr="uib-tooltip=#{remove}">
+					<i class="zmdi zmdi-close"></i>
+				</a>
+			</li>
+		</ul>
+	</th:block>
+
+	<th:block th:fragment="account_list">
+  		<div style="padding-left:20px; padding-right:20px; margin-bottom:4px;">
+             <table class="table" style="background-color:rgba(0,188,212,0.1);">
+             	<tr data-ng-repeat="account in w.accounts">
+ 					<td style="padding-bottom:10px; padding-left:55px;">
+                        <span ng-if="!account.$edit">{{ account.id }}</span>
+                        <div ng-if="account.$edit"><input class="form-control" type="text" ng-model="account.id" /></div>
+ 					</td>
+					<td style="width: 160px; padding-bottom:10px;">
+	 					{{account.idType}}
+	 				</td>
+	 				<td style="width: 100px; padding-bottom:10px;">
+	                    <div class="toggle-switch">
+	                    	<input id="activated_{{account.uid}}" type="checkbox" hidden="hidden" ng-model="account.activated" ng-change="activate(account)">
+	                    	<label for="activated_{{account.uid}}" class="ts-helper"></label>
+	                	</div>
+	 				</td>
+	 				<td style="width: 154px; padding-bottom:10px;">
+						<ul class="actions">
+							<li>
+								<a href="" tooltip-placement="bottom" th:attr="uib-tooltip=#{edit}" ng-click="editAccount(w, account, 'edit')" >
+									<i class="zmdi zmdi-edit"></i>
+								</a>
+							</li>
+							<li>
+								<a href="" tooltip-placement="bottom" ng-style="{'visibility': needPassword(account) ? 'visible':'hidden'}" th:attr="uib-tooltip=#{change_password}" ng-click="editAccount(w, account, 'password')">
+									<i class="zmdi zmdi-key"></i>
+								</a>
+							</li>
+							<li>
+								<a href="" ng-click="removeAccount(account.id)" tooltip-placement="bottom" th:attr="uib-tooltip=#{remove}">
+									<i class="zmdi zmdi-close"></i>
+								</a>
+							</li>
+						</ul>
+	 				</td>
+	 			</tr>
+			</table>
+		</div>                    		
+	</th:block>
+	
+	<th:block th:fragment="selectTemplate">
+		<script id="ng-table/filters/select.html" type="text/ng-template">
+			<select ng-options="data.id as data.title for data in {{$column.data}}" ng-table-select-filter-ds="$column" ng-disabled="$filterRow.disabled" ng-model="params.filter()[name]" class="filter filter-select form-control" name="{{name}}">
+   				<option style="display:none" value=""></option>
+			</select>
+		</script>
+	</th:block>
+</body>
+</html>

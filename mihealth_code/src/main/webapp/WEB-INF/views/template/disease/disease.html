@@ -1,0 +1,126 @@
+<div class="container" data-ng-controller="careCtrl as tctrl">
+    <div class="card">
+        <div class="card-header">
+            <h2>[[#{disease_records}]] <small>[[#{about_disease}]]</small></h2>
+            <ul class="actions">
+	            <li>
+	                <a ng-click="refresh()" tooltip-placement="bottom" th:attr="uib-tooltip=#{refresh}">
+	                    <i class="zmdi zmdi-refresh-alt"></i>
+	                </a>
+	            </li>
+	            <li>
+	                <a ng-href="{{downloadReports()}}" tooltip-placement="bottom" th:attr="uib-tooltip=#{download}">
+	                    <i class="zmdi zmdi-download"></i>
+	                </a>
+	            </li>
+	            <li class="dropdown" uib-dropdown>
+	                <a href="" uib-dropdown-toggle>
+	                    <i class="zmdi zmdi-more-vert"></i>
+	                </a>
+	
+	                <ul class="dropdown-menu dropdown-menu-right">
+	                    <li>
+	                        <a href="" ng-click="isFilterVisible = !isFilterVisible">{{isFilterVisible ? '[(#{hide_filter})]' : '[(#{show_filter})]'}}</a>
+	                    </li>
+	                </ul>
+	            </li>
+	        </ul>
+<!-- 	        <button class="btn bgm-red btn-float waves-effect" ng-click="add()"><i class="zmdi zmdi-plus"></i></button> -->
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table ng-table="table" class="table table-vmiddle">
+                    <tr ng-repeat-start="w in $data" ng-style="rowStyle($index, w)">
+                    	<td style="width:65px;"  ng-click="showDetails(w)">
+		                	<i class="zmdi zmdi-hc-fw mdc-text-blue zmdi-hc-lg" ng-class="w.showDetails ? 'zmdi-chevron-down' : 'zmdi-chevron-right'" ng-show="w.hasTreatment"></i>
+						</td>
+                        <td th:title="'\''+#{class_id}+'\''" style="width:100px;" class="text-center" header-class="'text-center'" sortable = "'registerProperties.classId'" filter="{ 'registerProperties.classId': 'text' }"  ng-click="showDetails(w)" th:if="${!user.hasRole('ROLE_TEACHER')}">
+                            {{ w.registerProperties.classId }}
+                        </td>
+                        <td th:title="'\''+#{seat_no}+'\''" style="width:100px;" class="text-center" sortable = "'registerProperties.seat'" header-class="'text-center'" filter="{ 'registerProperties.seat': 'number' }"  ng-click="showDetails(w)">
+                            {{ w.registerProperties.seat }}
+                        </td>
+                        <td th:title="'\''+#{name}+'\''" header-class="'text-center'" sortable = "'name'" filter="{ 'name': 'text' }"  ng-click="showDetails(w)">
+                            <i class="zmdi zmdi-hc-fw" ng-class="w.gender == 'MALE' ? 'zmdi-male-alt mdc-text-light-blue' : 'zmdi-female mdc-text-pink' "></i>{{ w.name }}
+                        </td>
+                        <td th:title="'\''+#{medical_dept}+'\''" filter="{ 'deptId': 'text' }"  ng-click="showDetails(w)">
+                            {{ tctrl.getDeptName(w.deptId)}}
+                        </td>
+                        <td th:title="'\''+#{reg_no}+'\''" filter="{ 'regNo': 'text' }"  ng-click="showDetails(w)">
+                            {{ w.regNo}}
+                        </td>
+                        <td th:title="'\''+#{disease}+'\''" filter="{ 'disease': 'text' }"  ng-click="showDetails(w)">
+                            {{ getDiseaseName(w.deptId, w.properties.disease) }}
+                        </td>
+                        <td th:title="'\''+#{injured_place}+'\''" filter="{ 'injuredPlace': 'text' }"  ng-click="showDetails(w)">
+                            {{ getInjuredPlaceName(w.properties.injuredPlace) }}
+                        </td>
+                        <td th:title="'\''+#{injured_part}+'\''" filter="{ 'injuredPart': 'text' }"  ng-click="showDetails(w)">
+                            {{ getInjuredPartName(w.properties.injuredPart) }}
+                        </td>
+                        <td th:title="'\''+#{nurse}+'\''" filter="{ 'nurse': 'text' }"  ng-click="showDetails(w)">
+                            {{ w.nurseName}}
+                        </td>
+                        <td th:title="'\''+#{registered_at}+'\''"  style="width:140px;" class="text-center" header-class="'text-center'" sortable = "'registeredAt'"  ng-click="showDetails(w)">
+                            {{ tctrl.toDate(w.registeredAt)|date:'short'}}
+                        </td>
+                        <td style="width:150px;" class="text-center">
+							<ul class="actions">
+								<li>
+									<a href="" ng-click="editTreatment(w)" tooltip-placement="bottom" th:attr="uib-tooltip=#{add_treatment_message}">
+										<i class="zmdi zmdi-collection-plus"></i>
+									</a>
+								</li>
+								<li>
+									<a href="" tooltip-placement="bottom" th:attr="uib-tooltip=#{edit}" ng-click="editDisease(w)">
+										<i class="zmdi zmdi-edit"></i>
+									</a>
+								</li>
+								<li>
+									<a href="" ng-click="removeDisease(w)" tooltip-placement="bottom" th:attr="uib-tooltip=#{remove}">
+										<i class="zmdi zmdi-close"></i>
+									</a>
+								</li>
+							</ul>
+                        </td>
+                    </tr>
+					<tr ng-repeat-end data-ng-show="w.showDetails" ng-style="rowStyle($index)">
+                    	<td colspan="10" style="padding:0px">
+                    		<div style="padding-left:20px; padding-right:20px; margin-bottom:4px;">
+	                    		<table class="table" style="background-color:rgba(0,188,212,0.1);">
+	                    			<tr data-ng-repeat="treatment in w.treatments">
+										<td style="width: 160px; padding-bottom:10px;">
+					    					{{tctrl.toDate(treatment.registeredAt)|date:'yyyy/MM/dd hh:mm'}}
+					    				</td>
+					    				<td style="padding-bottom:10px;">
+					    					{{ getTreatmentName(w.deptId, treatment.treatment.treatment) }} : {{treatment.treatment.comment}}
+					    				</td>
+					    				<td style="width: 140px; padding-bottom:10px;">
+					    					{{treatment.nurseName}}
+					    				</td>
+					    				<td style="width: 124px; padding-bottom:10px;">
+											<ul class="actions">
+												<li>
+													<a href="" tooltip-placement="bottom" th:attr="uib-tooltip=#{edit}" ng-click="editTreatment(w, treatment)" >
+														<i class="zmdi zmdi-edit"></i>
+													</a>
+												</li>
+												<li>
+													<a href="" ng-click="removeTreatment(treatment.uid)" tooltip-placement="bottom" th:attr="uib-tooltip=#{remove}">
+														<i class="zmdi zmdi-close"></i>
+													</a>
+												</li>
+											</ul>
+					    				</td>
+					    			</tr>
+	                    		</table>
+                    		</div>                    		
+                    	</td>
+                    </tr>					
+                </table>
+            </div>
+        </div>
+    </div>        
+</div>
+
+<th:block th:replace="fragment/table.html :: selectTemplate"></th:block>

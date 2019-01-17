@@ -1,0 +1,32 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<body>
+	<th:block th:fragment="dialog">
+		<div class="modal-header">
+			<h4 class="modal-title">[(#{board_info})]({{reference.language}})</h4>
+		</div>
+		<div class="modal-body">
+			<div class="form-group fg-line">
+			    <label for="boardId">[(#{board_id})]</label>
+			    <input type="text" class="form-control input-sm" id="boardId" th:placeholder="#{placeholder_board_id}" required ng-model="reference.boardId">
+			</div>
+			<div class="form-group fg-line">
+			    <label for="name">[(#{display_name})]</label>
+			    <input type="text" class="form-control input-sm" id="name" th:placeholder="#{placeholder_board_name}" required ng-model="reference.name">
+			</div>
+			<div class="form-group fg-line">
+			    <label for="comment">[(#{comment})]</label>
+				<textarea class="form-control" rows="3" id="comment" th:placeholder="#{placeholder_comment}" ng-model="reference.comment"></textarea>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-link" ng-click="cancel()">[(#{cancel})]</button>
+			<button class="btn btn-link" ng-click="ok()">[(#{add})]</button>
+		</div>
+	</th:block>	
+</body>
+</html>

@@ -1,0 +1,77 @@
+<div class="container" data-ng-controller="tableCtrl as tctrl">
+
+    <div class="block-header">
+        <h2>[[#{board}]]</h2>
+
+		<ul class="actions">
+			<li>
+				<a href="">
+					<i class="zmdi zmdi-trending-up"></i>
+				</a>
+			</li>
+			<li>
+			    <a href="">
+			        <i class="zmdi zmdi-check-all"></i>
+			    </a>
+			</li>
+            <li class="dropdown" uib-dropdown>
+            	<a href="" uib-dropdown-toggle>
+                	<i class="zmdi zmdi-more-vert"></i>
+                </a>
+
+				<ul class="dropdown-menu dropdown-menu-right">
+				    <li>
+				        <a href="">Refresh</a>
+				    </li>
+				    <li>
+				        <a href="">Manage Widgets</a>
+				    </li>
+				    <li>
+				        <a href="">Widgets Settings</a>
+				    </li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h2>[[#{board_manage}]] <small>[[#{pencel_to_edit}]]</small></h2>
+        </div>
+                
+        <div class="card-body">
+            <div class="table-responsive">
+                <table ng-table="tctrl.tableEdit" class="table table-striped table-vmiddle">
+                    <tr ng-repeat="w in $data"  ng-class="{ 'active': w.$edit }">
+                        <td data-title="'ID'">
+                            <span ng-if="!w.$edit">{{ w.id }}</span>
+                            <div ng-if="w.$edit"><input class="form-control" type="text" ng-model="w.id" /></div>
+                        </td>
+                        <td data-title="'Name'">
+                            <span ng-if="!w.$edit">{{ w.name }}</span>
+                            <div ng-if="w.$edit"><input class="form-control" type="text" ng-model="w.name" /></div>
+                        </td>
+                        <td data-title="'Email'">
+                            <span ng-if="!w.$edit">{{ w.email }}</span>
+                            <div ng-if="w.$edit"><input class="form-control" type="email" ng-model="w.email" /></div>
+                        </td>
+                        <td data-title="'Username'">
+                            <span ng-if="!w.$edit">{{ w.username }}</span>
+                            <div ng-if="w.$edit"><input class="form-control" type="text" ng-model="w.username" /></div>
+                        </td>
+                        <td data-title="'Contact'">
+                            <span ng-if="!w.$edit">{{ w.contact }}</span>
+                            <div ng-if="w.$edit"><input class="form-control" type="text" ng-model="w.contact" /></div>
+                        </td>
+                        <td data-title="'Actions'">
+                            <button type="button" class="btn btn-default" ng-if="!w.$edit" ng-click="w.$edit = true"><i class="zmdi zmdi-edit"></i></button>
+                            <button type="button" class="btn btn-success" ng-if="w.$edit" ng-click="w.$edit = false"><i class="zmdi zmdi-check"></i></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>        
+</div>
+
+

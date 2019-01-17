@@ -1,0 +1,160 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<body>
+	<th:block th:fragment="dialog">
+		<div class="modal-header">
+			<h4 class="modal-title">[(#{student_info})]</h4>
+		</div>
+		<div class="modal-body">
+			<div class="form-group fg-line">
+			    <label for="campusName">[(#{campus})]</label>
+			    <input type="text" class="form-control input-sm" id="campusName" ng-model="reference.campus.name" ng-readonly="true">
+			</div>
+			<div class="row">
+                <div class="col-sm-4">
+					<div class="form-group fg-line">
+					    <label for="schoolYear">[(#{school_year})]</label>
+					    <input type="text" class="form-control input-sm" id="schoolYear" th:placeholder="#{placeholder_school_year}" required ng-model="reference.schoolYear">
+					</div>
+                </div>
+                <div class="col-sm-4">
+					<div class="form-group fg-line">
+					    <label for="studentNo">[(#{student_no})]</label>
+					    <input type="text" class="form-control input-sm" id="studentNo" th:placeholder="#{placeholder_student_no}" required ng-model="reference.studentNo">
+					</div>
+                </div>
+                <div class="col-sm-4">
+					<div class="form-group fg-line">
+					    <label for="easyCard">[(#{easycard_id})]</label>
+					    <input type="text" class="form-control input-sm" id="easyCard" th:placeholder="#{placeholder_easycard_id}" required ng-model="reference.registerProperties.easyCardId">
+					</div>
+                </div>
+			</div>               
+			<div class="row">
+                <div class="col-sm-4">
+					<div class="form-group fg-line">
+					    <label for="grade">[(#{grade})]</label>
+					    <input type="text" class="form-control input-sm" id="grade" th:placeholder="#{placeholder_current_grade}" required ng-model="reference.grade">
+					</div>
+                </div>
+                <div class="col-sm-4">
+					<div class="form-group fg-line">
+					    <label for="classId">[(#{class_id})]</label>
+					    <input type="text" class="form-control input-sm" id="classId" th:placeholder="#{placeholder_current_class_id}" required ng-model="reference.registerProperties.classId">
+					</div>
+                </div>
+                <div class="col-sm-4">
+					<div class="form-group fg-line">
+					    <label for="seat">[(#{seat})]</label>
+					    <input type="text" class="form-control input-sm" id="seat" th:placeholder="#{placeholder_seat_no}" required ng-model="reference.registerProperties.seat">
+					</div>
+                </div>
+			</div>               
+			<div class="row">
+                <div class="col-sm-6">
+					<div class="form-group fg-line">
+					    <label for="name">[(#{name})]</label>
+					    <input type="text" class="form-control input-sm" id="name" th:placeholder="#{placeholder_name}" required ng-model="reference.name">
+					</div>
+                </div>
+                <div class="col-sm-6">
+					<div class="form-group fg-line">
+					    <label for="gender">[(#{gender})]</label>
+					    <div id="gender" style="margin-top:6px;">
+				            <label class="radio radio-inline m-r-20">
+				                <input type="radio" name="inlineRadioOptions" value="MALE" ng-model="reference.gender">
+				                <i class="input-helper"></i>
+				                [(#{male})]
+				            </label>
+				            <label class="radio radio-inline m-r-20">
+				                <input type="radio" name="inlineRadioOptions" value="FEMALE" ng-model="reference.gender">
+				                <i class="input-helper"></i>
+				                [(#{female})]
+				            </label>
+			            </div>
+					</div>
+                </div>
+            </div>
+			<div class="row">
+                <div class="col-sm-6">
+					<div class="form-group fg-line">
+					    <label for="nationalId">[(#{national_id})]</label>
+					    <input type="text" class="form-control input-sm" id="nationalId" th:placeholder="#{placeholder_national_id}" required ng-model="reference.nationalId">
+					</div>
+                </div>
+                <div class="col-sm-4">
+					<div class="form-group fg-line ">
+					    <label for="birthDate">[(#{birth})]</label>
+		                <div class="fg-line" ng-class="{ 'fg-toggled': opened == true }">
+		                    <input ng-click="opened=true" type="text" class="form-control" style="margin-top: -6px;" uib-datepicker-popup="mediumDate" show-weeks="false" ng-model="reference.birthDate" is-open="opened" min-date="minDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" placeholder="Enter birth date" />
+			            </div>
+					</div>
+                </div>
+                <div class="col-sm-2">
+					<div class="form-group fg-line">
+					    <label for="bloodType">[(#{blood_type})]</label>
+					    <input type="text" class="form-control input-sm" id="bloodType" th:placeholder="#{placeholder_blood_type}" required ng-model="reference.userProperties.bloodType">
+					</div>
+                </div>
+            </div>
+			<div class="row">
+                <div class="col-sm-6">
+					<div class="form-group fg-line">
+					    <label for="dad">[(#{father})]</label>
+					    <input type="text" class="form-control input-sm" id="dad" th:placeholder="#{placeholder_father}" required ng-model="reference.userProperties.dad">
+					</div>
+                </div>
+                <div class="col-sm-6">
+					<div class="form-group fg-line">
+					    <label for="mom">[(#{mother})]</label>
+					    <input type="text" class="form-control input-sm" id="mom" th:placeholder="#{placeholder_mother}" required ng-model="reference.userProperties.mom">
+					</div>
+                </div>
+            </div>
+			<div class="row">
+                <div class="col-sm-6">
+					<div class="form-group fg-line">
+					    <label for="tel">[(#{tel})]</label>
+					    <input type="text" class="form-control input-sm" id="tel" th:placeholder="#{placeholder_telephone}" required ng-model="reference.userProperties.tel">
+					</div>
+                </div>
+                <div class="col-sm-6">
+					<div class="form-group fg-line">
+					    <label for="emergencyCall">[(#{mobile})]</label>
+					    <input type="text" class="form-control input-sm" id="emergencyCall" th:placeholder="#{placeholder_emergency_call}" required ng-model="reference.userProperties.mobile">
+					</div>
+                </div>
+            </div>
+			<div class="row">
+                <div class="col-sm-2">
+					<div class="form-group fg-line">
+					    <label for="zip">[(#{zip})]</label>
+					    <input type="text" class="form-control input-sm" id="zip" th:placeholder="#{placeholder_zip}" required ng-model="reference.userProperties.zip">
+					</div>
+                </div>
+                <div class="col-sm-10">
+					<div class="form-group fg-line">
+					    <label for="address">[(#{address})]</label>
+					    <input type="text" class="form-control input-sm" id="address" th:placeholder="#{placeholder_address}" required ng-model="reference.userProperties.address">
+					</div>
+                </div>
+            </div>
+		</div>
+		<div class="modal-footer">
+			<div class="checkbox m-b-15" style="float:left">
+                <label>
+                    <input type="checkbox" value="" ng-model="reference.userProperties.isGuest">
+                    <i class="input-helper"></i>
+                    [[#{is_guest}]]
+                </label>
+            </div>	
+			<button class="btn btn-link" ng-click="cancel()">[(#{cancel})]</button>
+			<button class="btn btn-link" ng-click="ok()" ng-disabled="!canSaveStudent(reference)">[(#{save})]</button>
+		</div>
+	</th:block>	
+</body>
+</html>

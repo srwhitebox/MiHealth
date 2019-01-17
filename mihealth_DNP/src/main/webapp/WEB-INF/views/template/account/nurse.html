@@ -1,0 +1,80 @@
+<div class="container" data-ng-controller="accountCtrl as tctrl">
+    <div class="card">
+        <div class="card-header">
+            <h2>[[#{nurse}]] <small>[[#{about_nurse}]]</small></h2>
+            <ul class="actions">
+	            <li>
+	                <a ng-click="table.reload()" tooltip-placement="bottom" th:attr="uib-tooltip=#{refresh}">
+	                    <i class="zmdi zmdi-refresh-alt"></i>
+	                </a>
+	            </li>
+	            <li>
+	                <a tooltip-placement="bottom" th:attr="uib-tooltip=#{download}">
+	                    <i class="zmdi zmdi-download"></i>
+	                </a>
+	            </li>
+	            <li class="dropdown" uib-dropdown>
+	                <a href="" uib-dropdown-toggle>
+	                    <i class="zmdi zmdi-more-vert"></i>
+	                </a>
+	
+	                <ul class="dropdown-menu dropdown-menu-right">
+	                    <li>
+	                        <a href="" ng-click="isFilterVisible = !isFilterVisible">{{isFilterVisible ? '[(#{hide_filter})]' : '[(#{show_filter})]'}}</a>
+	                    </li>
+	                </ul>
+	            </li>
+	        </ul>
+	        <button class="btn bgm-red btn-float waves-effect" ng-click="editUser(null, 'ROLE_NURSE')"><i class="zmdi zmdi-plus"></i></button>
+        </div>
+                
+        <div class="card-body">
+            <div class="table-responsive">
+                <table ng-table="table" class="table table-vmiddle">
+                    <tr ng-repeat-start="w in $data" ng-style="rowStyle($index, w)">
+                    	<td style="width:65px;" ng-click="showAccounts(w)">
+		                	<i class="zmdi zmdi-hc-fw mdc-text-blue zmdi-hc-lg" ng-class="w.showDetails ? 'zmdi-chevron-down' : 'zmdi-chevron-right'" ng-show="w.hasAccount"></i>
+						</td>
+                        <td style="width:150px;" th:title="'\''+#{dept}+'\''" sortable = "'dept'" filter="{ 'dept': 'text' }" ng-click="showAccounts(w)">
+                            <span>{{ w.properties.dept }}</span>
+                        </td>
+                        <td th:title="'\''+#{name}+'\''" sortable = "'name'" filter="{ 'name': 'text' }" ng-click="showAccounts(w)">
+                            <span>{{ w.name }}</span>
+                        </td>
+                        <td th:title="'\''+#{job_title}+'\''" sortable = "'properties.title'" filter="{ 'properties.title': 'text' }" ng-click="showAccounts(w)">
+                            <span>{{ w.properties.title }}</span>
+                        </td>
+                        <td th:title="'\''+#{email}+'\''" sortable = "'properties.email'" filter="{ 'properties.email': 'text' }" ng-click="showAccounts(w)">
+                            <span>{{ w.properties.email }}</span>
+                        </td>
+                        <td th:title="'\''+#{tel}+'\''" sortable = "'properties.tel'" filter="{ 'properties.tel': 'text' }" ng-click="showAccounts(w)">
+                            <span>{{ w.properties.tel }}</span>
+                        </td>
+                        <td th:title="'\''+#{mobile}+'\''" sortable = "'properties.mobile'" filter="{ 'properties.mobile': 'text' }" ng-click="showAccounts(w)">
+                            <span>{{ w.properties.mobile }}</span>
+                        </td>
+                        <td style="width:160px;" th:title="'\''+#{roles}+'\''" sortable = "'roles'" ng-click="showAccounts(w)">
+                            {{ tctrl.extractRoles(w.roles) }}
+                        </td>
+                        <td style="width:100px;" th:title="'\''+#{enabled_state}+'\''">
+                        	<div class="toggle-switch">
+		                        <input id="enabled_{{w.uid}}" type="checkbox" hidden="hidden" ng-model="w.enabled" ng-change="save(w)">
+		                        <label for="enabled_{{w.uid}}" class="ts-helper"></label>
+                    		</div>
+                        </td>
+                        <td style="width:175px;">
+                        	<div th:replace="fragment/table.html :: account_action"></div>
+                        </td>
+                    </tr>
+                    <tr ng-repeat-end data-ng-show="w.showAccounts" ng-style="rowStyle($index)">
+						<td colspan="10" style="padding:0px">
+							<div th:replace="fragment/table.html :: account_list"></div>
+                    	</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>        
+</div>
+
+

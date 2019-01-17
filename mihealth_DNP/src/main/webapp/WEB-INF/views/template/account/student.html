@@ -1,0 +1,106 @@
+<div class="container" data-ng-controller="studentCtrl as tctrl">
+    <div class="card">
+        <div class="card-header">
+            <h2>[[#{student}]] <small>[[#{about_student_account}]]</small></h2>
+            <ul class="actions">
+	            <li>
+	                <a ng-click="table.reload()" tooltip-placement="bottom" th:attr="uib-tooltip=#{refresh}">
+	                    <i class="zmdi zmdi-refresh-alt"></i>
+	                </a>
+	            </li>
+	            <li>
+	                <a ng-href="{{downloadReports()}}" tooltip-placement="bottom" th:attr="uib-tooltip=#{download_report}">
+	                    <i class="zmdi zmdi-download"></i>
+	                </a>
+	            </li>
+	            <li class="dropdown" uib-dropdown>
+	                <a href="" uib-dropdown-toggle>
+	                    <i class="zmdi zmdi-more-vert"></i>
+	                </a>
+	
+	                <ul class="dropdown-menu dropdown-menu-right">
+	                    <li>
+	                        <a href="" ngf-select="upload($file)" ngf-multiple="true" accept=".xls,.xlsx" ngf-max-size="20MB">[(#{upload})]</a>
+	                    </li>
+	                    <li>
+	                        <a href="" ng-click="isFilterVisible = !isFilterVisible">{{isFilterVisible ? '[(#{hide_filter})]' : '[(#{show_filter})]'}}</a>
+	                    </li>
+	                </ul>
+	            </li>
+	        </ul>
+	        <button class="btn bgm-red btn-float waves-effect" ng-click="update()"><i class="zmdi zmdi-plus"></i></button>
+        </div>
+                
+        <div class="card-body">
+            <div class="table-responsive">
+                <table ng-table="table" class="table table-striped table-vmiddle" show-filter="isFilterVisible">
+                    <tr ng-repeat="w in $data" style="cursor :pointer;">
+                        <td style="width: 120px;" th:title="'\''+#{national_id}+'\''" sortable = "'nationalId'" filter="{ 'nationalId': 'text' }" ng-click="openStudentDetails(w)">
+                            {{ w.nationalId }}
+                        </td>
+                        <td style="width: 120px;" th:title="'\''+#{student_no}+'\''" sortable = "'studentNo'" filter="{ 'studentNo': 'text' }" ng-click="openStudentDetails(w)">
+                            {{ w.studentNo }}
+                        </td>
+                        <td style="width: 80px;" th:title="'\''+#{school_year}+'\''" sortable = "'schoolYear'" filter="{ 'schoolYear': 'text' }" th:if="${!user.hasRole('ROLE_TEACHER')}" ng-click="openStudentDetails(w)">
+                            {{ w.schoolYear }}
+                        </td>
+                        <td style="width: 60px;" th:title="'\''+#{grade}+'\''" sortable = "'grade'" filter="{ 'grade': 'number' }" th:if="${!user.hasRole('ROLE_TEACHER')}" ng-click="openStudentDetails(w)">
+                            {{ w.grade }}
+                        </td>
+                        <td style="width: 80px;" th:title="'\''+#{class_id}+'\''" sortable = "'registerProperties.classId'" filter="{ 'registerProperties.classId': 'text' }" th:if="${!user.hasRole('ROLE_TEACHER')}" ng-click="openStudentDetails(w)">
+                            {{ w.registerProperties.classId }}
+                        </td>
+                        <td style="width: 80px;" th:title="'\''+#{seat}+'\''" sortable = "'registerProperties.seat'" filter="{ 'registerProperties.seat': 'number' }" ng-click="openStudentDetails(w)">
+                            {{ w.registerProperties.seat }}
+                        </td>
+                        <td th:title="'\''+#{name}+'\''" sortable = "'name'" filter="{ 'name': 'text' }" ng-click="openStudentDetails(w)">
+                        	<img class="lv-img-sm" src="profile/{{w.userUid}}" >
+                        	<i class="zmdi zmdi-hc-fw" ng-class="w.gender == 'MALE' ? 'zmdi-male-alt mdc-text-light-blue' : 'zmdi-female mdc-text-pink' "></i>{{ w.name }}
+                        </td>
+                        <td style="width:120px;" th:title="'\''+#{birth}+'\''" sortable = "'birthDate'"  ng-click="openStudentDetails(w)">
+                            {{ tctrl.toDate(w.birthDate)|date:'mediumDate'}}
+                        </td>
+                        <td style="width: 60px;" th:title="'\''+#{blood_type}+'\''" sortable = "'userProperties.bloodType'" filter="{ 'userProperties.bloodType': 'text' }" ng-click="openStudentDetails(w)">
+                            {{ w.userProperties.bloodType }}
+                        </td>
+                        <td style="width: 120px;" th:title="'\''+#{tel}+'\''" sortable = "'userProperties.tel'" filter="{ 'userProperties.tel': 'text' }" ng-click="openStudentDetails(w)">
+                            {{ w.userProperties.tel }}
+                        </td>
+                        <td style="width: 120px;" th:title="'\''+#{mobile}+'\''" sortable = "'userProperties.mobile'" filter="{ 'userProperties.tel': 'text' }" ng-click="openStudentDetails(w)">
+                            {{ w.userProperties.mobile }}
+                        </td>
+                        <th:block th:if="${user.hasRole('ROLE_ADMIN')}">
+	                        <td style="width:100px;" th:title="'\''+#{enabled_state}+'\''" filter="{ 'userEnabled': 'text' }">
+	                        	<div class="toggle-switch">
+			                        <input id="chk_{{w.userUid}}" type="checkbox" hidden="hidden" ng-model="w.userEnabled" ng-change="save(w)">
+			                        <label for="chk_{{w.userUid}}" class="ts-helper"></label>
+	                    		</div>
+	                        </td>
+	                        <td style="width:155px;" >
+								<ul class="actions">
+			                 		<li>
+										<a ng-href="{{downloadReport(w)}}" tooltip-placement="bottom" th:attr="uib-tooltip=#{download_report}">
+											<i class="zmdi zmdi-square-down"></i>
+										</a>
+									</li>
+			                 		<li>
+										<a href="" ng-click="update(w)" tooltip-placement="bottom" th:attr="uib-tooltip=#{edit}">
+											<i class="zmdi zmdi-edit"></i>
+										</a>
+									</li>
+			                 		<li>
+										<a href="" ng-click="remove(w)" tooltip-placement="bottom" th:attr="uib-tooltip=#{remove}">
+											<i class="zmdi zmdi-close"></i>
+										</a>
+									</li>
+								</ul>
+	                        </td>
+                        </th:block>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>        
+</div>
+
+

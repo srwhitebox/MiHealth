@@ -1,0 +1,28 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<body>
+	<th:block th:fragment="dialog">
+		<div class="modal-header">
+			<h4 class="modal-title">[[#{alt_locale}]]</h4>
+		</div>
+		<div class="modal-body">
+			<div class="form-group fg-line">
+			    <label for="locale">[[#{locale}]]</label>
+			    <input type="text" class="form-control input-sm" id="locale" th:placeholder="#{placeholder_source_locale}" required ng-model="reference.localeTag">
+			</div>
+			<div class="form-group fg-line">
+			    <label for="name">[[#{alt_locale}]]</label>
+			    <input type="text" class="form-control input-sm" id="name" th:placeholder="#{placeholder_alt_locale}" required ng-model="reference.altLocaleTag">
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-link" ng-click="cancel()">[(#{cancel})]</button>
+			<button class="btn btn-link" ng-click="ok()">[(#{add})]</button>
+		</div>
+	</th:block>	
+</body>
+</html>

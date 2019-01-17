@@ -1,0 +1,66 @@
+<div class="container" data-ng-controller="localeCtrl as locale" ng-init="init()">
+    <div class="card">
+        <div class="card-header">
+            <h2>[[#{bmi}]] <small>[[#{about_bmi}]]</small></h2>
+            <ul class="actions">
+	            <li>
+	                <a ng-click="refresh()" tooltip-placement="bottom" th:attr="uib-tooltip=#{refresh}">
+	                    <i class="zmdi zmdi-refresh-alt"></i>
+	                </a>
+	            </li>
+	            <li>
+	                <a  tooltip-placement="bottom" th:attr="uib-tooltip=#{download}">
+	                    <i class="zmdi zmdi-download"></i>
+	                </a>
+	            </li>
+	            <li class="dropdown" uib-dropdown>
+	                <a href="" uib-dropdown-toggle>
+	                    <i class="zmdi zmdi-more-vert"></i>
+	                </a>
+	
+	                <ul class="dropdown-menu dropdown-menu-right">
+	                    <li>
+	                        <a href="" ng-click="isFilterVisible = !isFilterVisible">{{isFilterVisible ? '[(#{hide_filter})]' : '[(#{show_filter})]'}}</a>
+	                    </li>
+	                </ul>
+	            </li>
+	        </ul>
+	        <button class="btn bgm-red btn-float waves-effect" ng-click="add()" ng-hide="true"><i class="zmdi zmdi-plus"></i></button>
+        </div>
+                
+        <div class="card-body">
+            <div class="table-responsive">
+            	<table class="table" style="border-collapse: initial !important;">
+            		<thead>
+            			<tr class="cell-border-bottom">
+	            			<th rowspan="2" class="cell-center cell-border-right">[(#{age})]</th>
+	            			<th colspan="3" class="cell-center cell-border-right">[(#{male})]</th>
+	            			<th colspan="3" class="cell-center cell-border-right">[(#{female})]</th>
+	            			<th rowspan="2" class="cell-center" style="width=10%">[(#{action})]</th>
+            			</tr>
+            			<tr>
+	            			<th class="cell-center cell-border-right">[(#{bmi_normal})]</th>
+	            			<th class="cell-center cell-border-right">[(#{bmi_over})]</th>
+	            			<th class="cell-center cell-border-right">[(#{bmi_obesity})]</th>
+	            			<th class="cell-center cell-border-right">[(#{bmi_normal})]</th>
+	            			<th class="cell-center cell-border-right">[(#{bmi_over})]</th>
+	            			<th class="cell-center cell-border-right">[(#{bmi_obesity})]</th>
+            			</tr>
+            		</thead>
+            		<tr ng-repeat="row in bmis">
+            			<td class="cell-center cell-border-right">{{row.age}}</td>
+            			<td class="cell-center cell-border-right">{{row.male.normal | number:1}}</td>
+            			<td class="cell-center cell-border-right">{{row.male.over | number:1}}</td>
+            			<td class="cell-center cell-border-right">{{row.male.obesity | number:1}}</td>
+            			<td class="cell-center cell-border-right">{{row.female.normal | number:1}}</td>
+            			<td class="cell-center cell-border-right">{{row.female.over | number:1}}</td>
+            			<td class="cell-center cell-border-right">{{row.female.obesity | number:1}}</td>
+            			<td>
+            			</td>
+            		</tr>
+            	</table>
+            </div>
+        </div>
+    </div>        
+</div>
+

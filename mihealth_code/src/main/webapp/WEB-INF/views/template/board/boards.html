@@ -1,0 +1,83 @@
+<div class="container" data-ng-controller="boardCtrl as tctrl" ng-init="init()">
+    <div class="card">
+        <div class="card-header">
+            <h2>[[#{board}]] <small>[[#{about_board}]]</small></h2>
+            <ul class="actions">
+	            <li>
+	                <a ng-click="refresh()" tooltip-placement="bottom" th:attr="uib-tooltip=#{refresh}">
+	                    <i class="zmdi zmdi-refresh-alt"></i>
+	                </a>
+	            </li>
+	            <li>
+	                <a  tooltip-placement="bottom" th:attr="uib-tooltip=#{download}">
+	                    <i class="zmdi zmdi-download"></i>
+	                </a>
+	            </li>
+	            <li>
+	                <div class="btn-group" style="margin-top:-12px;box-shadow:none;" uib-dropdown>
+	                    <button type="button" class="btn btn-default" uib-dropdown-toggle>{{curLocale.displayName}}&nbsp;<span class="caret"></span></button>
+	                    <ul class="dropdown-menu">
+	                        <li data-ng-repeat="w in locales"><a href="" ng-click="setCurLocale($index)">{{ w.displayName }}</a></li>
+	                    </ul>
+	                </div>
+	            </li>
+	            <li class="dropdown" uib-dropdown>
+	                <a href="" uib-dropdown-toggle>
+	                    <i class="zmdi zmdi-more-vert"></i>
+	                </a>
+	
+	                <ul class="dropdown-menu dropdown-menu-right">
+	                    <li>
+	                        <a href="" ng-click="isFilterVisible = !isFilterVisible">{{isFilterVisible ? '[(#{hide_filter})]' : '[(#{show_filter})]'}}</a>
+	                    </li>
+	                </ul>
+	            </li>
+	        </ul>
+	        <button class="btn bgm-red btn-float waves-effect" ng-click="addBoard()"><i class="zmdi zmdi-plus"></i></button>
+        </div>
+                
+        <div class="card-body">
+            <div class="table-responsive">
+                <table ng-table="table" class="table table-striped table-vmiddle">
+                    <tr ng-repeat="w in $data"  ng-class="{ 'active': w.$edit }">
+						<td th:title="'\''+#{board_id}+'\''"  sortable = "'boardId'" filter="{ boardId:'text' }">
+                            <span>{{ w.boardId }}</span>
+                        </td>
+                        <td th:title="'\''+#{display_name}+'\''"   sortable="'properties[\'' + curLocale.localeTag +'\']'" filter="getFilter(curLocale.localeTag)">
+                            <span ng-if="!w.$edit">{{ w.properties[curLocale.localeTag] }}</span>
+                            <div ng-if="w.$edit"><input class="form-control" type="text" ng-model="w.properties[curLocale.localeTag]" /></div>
+                        </td>                        
+                        <td style="width:105px;" class="text-center" >
+							<ul class="actions" ng-if="!w.$edit">
+		                 		<li>
+									<a href="" ng-click="w.$edit = true" tooltip-placement="bottom" th:attr="uib-tooltip=#{edit}">
+										<i class="zmdi zmdi-edit"></i>
+									</a>
+								</li>
+		                 		<li>
+									<a href="" ng-click="remove(resource.table, w)" tooltip-placement="bottom" th:attr="uib-tooltip=#{remove}">
+										<i class="zmdi zmdi-close"></i>
+									</a>
+								</li>
+							</ul>
+		                 	<ul class="actions" ng-if="w.$edit">
+		                 		<li>
+									<a href="" ng-click="w.$edit = false; saveBoard(w)" tooltip-placement="bottom" th:attr="uib-tooltip=#{save}">
+										<i class="zmdi zmdi-check"></i>
+									</a>
+								</li>
+		                 		<li>
+									<a href="" ng-click="w.$edit=false" tooltip-placement="bottom" th:attr="uib-tooltip=#{close}">
+										<i class="zmdi zmdi-close"></i>
+									</a>
+								</li>
+							</ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>        
+</div>
+
+

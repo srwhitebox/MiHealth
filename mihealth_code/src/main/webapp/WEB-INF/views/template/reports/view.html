@@ -1,0 +1,49 @@
+<div class="container" data-ng-controller="reportsCtrl as tctrl">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label hidden-xs">[[#{reports}]]{{getPeriodText()}}</h2>
+            <ul class="lv-actions actions">
+            	<button class="btn btn-default btn-icon-text" ng-click="searchPeriod()"><i class="zmdi zmdi-calendar-check"></i> [(#{search_period})]</button>
+            	<button class="btn btn-default btn-icon-text" ng-click="downloadReports('reports/care')"><i class="zmdi zmdi-hospital"></i> [(#{disease_report})]</button>
+            	<button class="btn btn-default btn-icon-text" ng-click="downloadReports('reports/measurement/bmi')"><i class="zmdi zmdi-ruler"></i> [(#{bmi_report})]</button>
+                <button class="btn btn-default btn-icon-text" ng-click="downloadReports('reports/measurement/vision')"><i class="zmdi zmdi-eye"></i> [(#{vision_report})]</button>
+                <button class="btn btn-default btn-icon-text" ng-click="downloadPersonalHelthReports()"><i class="zmdi zmdi-square-down"></i> [(#{health_chart})]</button>
+	        </ul>
+        </div>
+                
+        <div class="card-body">
+            <div class="table-responsive">
+                <table ng-table="table" class="table table-striped table-vmiddle" show-filter="isFilterVisible">
+                    <tr ng-repeat="w in $data" style="cursor :pointer;">
+                        <td style="width: 120px;" th:title="'\''+#{student_no}+'\''" sortable = "'studentNo'" filter="{ 'studentNo': 'text' }" ng-click="openStudentDetails(w)">
+                            {{ w.studentNo }}
+                        </td>
+                        <td style="width: 60px;" th:title="'\''+#{grade}+'\''" sortable = "'grade'" filter="{ 'grade': 'text' }" th:if="${!user.hasRole('ROLE_TEACHER')}" ng-click="openStudentDetails(w)">
+                            {{ w.grade }}
+                        </td>
+                        <td style="width: 80px;" th:title="'\''+#{class_id}+'\''" sortable = "'registerProperties.classId'" filter="{ 'registerProperties.classId': 'text' }" th:if="${!user.hasRole('ROLE_TEACHER')}" ng-click="openStudentDetails(w)">
+                            {{ w.registerProperties.classId }}
+                        </td>
+                        <td style="width: 80px;" th:title="'\''+#{seat}+'\''" sortable = "'registerProperties.seat'" filter="{ 'registerProperties.seat': 'text' }" ng-click="openStudentDetails(w)">
+                            {{ w.registerProperties.seat }}
+                        </td>
+                        <td th:title="'\''+#{name}+'\''" sortable = "'name'" filter="{ 'name': 'text' }" ng-click="openStudentDetails(w)">
+                        	<i class="zmdi zmdi-hc-fw" ng-class="w.gender == 'MALE' ? 'zmdi-male-alt mdc-text-light-blue' : 'zmdi-female mdc-text-pink' "></i>{{ w.name }}
+                        </td>
+                        <td style="width:155px;" >
+							<ul class="actions">
+		                 		<li>
+									<a ng-href="{{downloadReport(w)}}" tooltip-placement="bottom" th:attr="uib-tooltip=#{download_report}">
+										<i class="zmdi zmdi-square-down"></i>
+									</a>
+								</li>
+							</ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>        
+</div>
+
+

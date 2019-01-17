@@ -1,0 +1,60 @@
+<div class="container" data-ng-controller="mikioCtrl as tctrl">
+    <div class="card">
+        <div class="card-header">
+            <h2>[[#{mikio}]] <small>[[#{about_mikio}]]</small></h2>
+            <ul class="actions">
+	            <li>
+	                <a ng-click="table.reload()" tooltip-placement="bottom" th:attr="uib-tooltip=#{refresh}">
+	                    <i class="zmdi zmdi-refresh-alt"></i>
+	                </a>
+	            </li>
+	            <li>
+	                <a tooltip-placement="bottom" th:attr="uib-tooltip=#{download}">
+	                    <i class="zmdi zmdi-download"></i>
+	                </a>
+	            </li>
+	            <li class="dropdown" uib-dropdown>
+	                <a href="" uib-dropdown-toggle>
+	                    <i class="zmdi zmdi-more-vert"></i>
+	                </a>
+	
+	                <ul class="dropdown-menu dropdown-menu-right">
+	                    <li>
+	                        <a href="" ng-click="isFilterVisible = !isFilterVisible">{{isFilterVisible ? '[(#{hide_filter})]' : '[(#{show_filter})]'}}</a>
+	                    </li>
+	                </ul>
+	            </li>
+	        </ul>
+	        <button class="btn bgm-red btn-float waves-effect" ng-click="editMikio(null)"><i class="zmdi zmdi-plus"></i></button>
+        </div>
+                
+        <div class="card-body">
+            <div class="table-responsive">
+                <table ng-table="table" class="table table-vmiddle">
+                    <tr ng-repeat="w in $data" ng-style="rowStyle($index, w)">
+                        <td th:title="'\''+#{id}+'\''" sortable = "'mikioId'" filter="{ 'mikioId': 'text' }" ng-click="showMikio(w)">
+                            <span>{{ w.mikioId }}</span>
+                        </td>
+                        <td th:title="'\''+#{nurse}+'\''" ng-click="showMikio(w)">
+                            <span>{{ nurseName(w.nurseUid) }}</span>
+                        </td>
+                        <td th:title="'\''+#{location}+'\''" sortable = "'properties.location'" filter="{ 'properties.location': 'text' }" ng-click="showMikio(w)">
+                            <span>{{ w.properties.location}}</span>
+                        </td>
+                        <td style="width:100px;" th:title="'\''+#{enabled_state}+'\''">
+                        	<div class="toggle-switch">
+		                        <input id="enabled_{{w.uid}}" type="checkbox" hidden="hidden" ng-model="w.enabled" ng-change="save(w)">
+		                        <label for="enabled_{{w.uid}}" class="ts-helper"></label>
+                    		</div>
+                        </td>
+                        <td style="width:175px;">
+                        	<div th:replace="fragment/table.html :: mikio_action"></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>        
+</div>
+
+

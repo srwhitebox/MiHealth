@@ -1,0 +1,52 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<body>
+	<th:block th:fragment="dialog">
+		<div class="modal-header">
+			<h4 class="modal-title">[(#{account})]</h4>
+		</div>
+		<div class="modal-body">
+			<div class="form-group fg-line">
+			    <label for="name">[(#{name})]</label>
+			    <input type="text" class="form-control input-sm" id="name" th:placeholder="#{name}" required ng-readonly="mode!='new'" ng-model="reference.name">
+			</div>
+			<div class="form-group fg-line">
+			    <label for="idType">[(#{id_type})]</label>
+                <select id="idType" th:placeholder="#{placeholder_select_id_type}" class="form-control" ng-disabled="reference.mode != 'new' && reference.mode != 'edit'" ng-model="reference.idType">
+                    <option ng-repeat="idType in reference.idTypes" value="{{idType.idType}}">{{idType.name}}</option>
+                </select>
+			</div>
+			<div class="form-group fg-line" ng-hide="reference.idType == 'EMAIL'">
+			    <label for="id">[(#{id})]</label>
+				<div class="input-group m-b-20">
+				    <input type="text" class="form-control input-sm" id="id" th:placeholder="#{id}" required ng-minlength="4" ng-readonly="reference.mode != 'new' && reference.mode != 'edit'" ng-change="checkAccount(reference.id)" ng-model="reference.id">
+				    <span class="input-group-addon" style="padding:0px;" ><i class="zmdi zmdi-hc-2x zmdi-check" ng-class="{'mdc-text-blue' : isAvailableAccount(reference.id) , 'mdc-text-red' : !isAvailableAccount(reference.id)}" ng-show="reference.mode == 'new'||reference.mode != 'edit'"></i></span>
+				</div>
+			</div>
+			<div class="form-group fg-line" ng-hide="reference.idType != 'EMAIL'">
+			    <label for="email">[(#{email})]</label>
+				<div class="input-group m-b-20">
+				    <input type="email" class="form-control input-sm" id="id" th:placeholder="#{email_address}" required ng-readonly="reference.mode != 'new' && reference.mode != 'edit'" ng-change="checkAccount(reference.id)" ng-model="reference.id">
+				    <span class="input-group-addon" style="padding:0px;" ><i class="zmdi zmdi-hc-2x zmdi-check" ng-class="{'mdc-text-blue' : isAvailableAccount(reference.id) , 'mdc-text-red' : !isAvailableAccount(reference.id)}" ng-show="reference.mode == 'new'||reference.mode != 'edit'"></i></span>
+				</div>
+			</div>
+			<div class="form-group fg-line">
+			    <label for="password">[(#{password})]</label>
+			    <input type="password" class="form-control input-sm" id="password" th:placeholder="#{password}" required ng-model="reference.password">
+			</div>
+			<div class="form-group fg-line">
+			    <label for="repassword">[(#{repassword})]</label>
+			    <input type="password" class="form-control input-sm" id="repassword" th:placeholder="#{repassword}" required ng-model="reference.repassword">
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-link" ng-click="cancel()">[(#{cancel})]</button>
+			<button class="btn btn-link" ng-click="ok()" ng-disabled="!canSaveAccount(reference)">[(#{save})]</button>
+		</div>
+	</th:block>	
+</body>
+</html>

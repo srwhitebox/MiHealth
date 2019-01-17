@@ -1,0 +1,48 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<body>
+	<th:block th:fragment="dialog">
+		<div class="modal-header">
+			<h4 class="modal-title">[(#{nurse_info})]</h4>
+		</div>
+		<div class="modal-body">
+			<div class="form-group fg-line">
+			    <label for="campusName">[(#{campus})]</label>
+			    <input type="text" class="form-control input-sm" id="campusName" ng-model="reference.campus.name" ng-readonly="true">
+			</div>
+			<div class="form-group fg-line">
+			    <label for="name">[(#{name})]</label>
+			    <input type="text" class="form-control input-sm" id="name" th:placeholder="#{placeholder_name}" required ng-model="reference.name">
+			</div>
+			<div class="form-group fg-line">
+			    <label for="dept">[(#{dept})]</label>
+			    <input type="text" class="form-control input-sm" id="dept" th:placeholder="#{placeholder_dept}" required ng-model="reference.properties.dept">
+			</div>
+			<div class="form-group fg-line">
+			    <label for="title">[(#{job_title})]</label>
+			    <input type="text" class="form-control input-sm" id="title" th:placeholder="#{placeholder_job_title}" required ng-model="reference.properties.title">
+			</div>
+			<div class="form-group fg-line">
+			    <label for="email">[(#{email})]</label>
+			    <input type="text" class="form-control input-sm" id="email" th:placeholder="#{placeholder_email}" required ng-model="reference.properties.email">
+			</div>
+			<div class="form-group fg-line">
+			    <label for="tel">[(#{tel})]</label>
+			    <input type="text" class="form-control input-sm" id="tel" th:placeholder="#{placeholder_telephone}" required ng-model="reference.properties.tel">
+			</div>
+			<div class="form-group fg-line">
+			    <label for="mobile">[(#{mobile})]</label>
+			    <input type="text" class="form-control input-sm" id="mobile" th:placeholder="#{placeholder_mobile}" required ng-model="reference.properties.mobile">
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-link" ng-click="cancel()">[(#{cancel})]</button>
+			<button class="btn btn-link" ng-click="ok()" ng-disabled="!canSaveUser(reference)">[(#{save})]</button>
+		</div>
+	</th:block>	
+</body>
+</html>

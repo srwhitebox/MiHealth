@@ -1,0 +1,34 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html>
+<head>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<th:block th:fragment="dialog">
+		<div class="modal-header">
+			<h4 class="modal-title">[[#{search_period}]]</h4>
+		</div>
+		<div class="modal-body">
+			<div class="checkbox m-b-15">
+                <label>
+                    <input type="checkbox" value="" ng-model="reference.showAllRecords">
+                    <i class="input-helper"></i>
+                    [[#{all_records}]]
+                </label>
+            </div>		
+			<div class="form-group fg-line">
+			    <label for="name">[[#{from}]]</label>
+			    <input type="date" class="form-control input-sm" id="name" required ng-model="reference.from" ng-disabled="reference.showAllRecords">
+			</div>
+			<div class="form-group fg-line">
+			    <label for="name">[[#{to}]]</label>
+			    <input type="date" class="form-control input-sm" id="name" required ng-model="reference.to" ng-disabled="reference.showAllRecords">
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-link" ng-click="cancel()">[(#{cancel})]</button>
+			<button class="btn btn-link" ng-click="ok()">[(#{ok})]</button>
+		</div>
+	</th:block>	
+</body>
+</html>

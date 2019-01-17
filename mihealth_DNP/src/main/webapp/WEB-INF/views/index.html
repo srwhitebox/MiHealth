@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]>
+	<html class="ie9" 
+		xmlns="http://www.w3.org/1999/xhtml" 
+		xmlns:th="http://www.thymeleaf.org"
+		data-ng-app="mihealth" data-ng-controller="materialadminCtrl as mactrl">
+<![endif]-->
+<![if IE 9 ]>
+	<html 
+		xmlns="http://www.w3.org/1999/xhtml" 
+		xmlns:th="http://www.thymeleaf.org"
+		data-ng-app="mihealth" data-ng-controller="materialadminCtrl as mactrl">
+<![endif]>	
+	
+<head>
+	<th:block th:replace="fragment/layout.html :: common_module"></th:block>
+
+	<title>MiHEALTH</title>
+
+	<!--/* CSS Libraries */-->
+	<link th:href="@{/lib/sweetalert/sweetalert.css}" rel="stylesheet">
+	<link th:href="@{/lib/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css}" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/lib/nvd3/nv.d3.min.css}">
+
+	<!--/* Common Modules */-->
+	<script th:src="@{/lib/jquery.nicescroll/jquery.nicescroll.min.js}"></script>
+	<script th:src="@{/lib/Waves/waves.min.js}"></script>
+	<script th:src="@{/lib//bootstrap-growl/bootstrap-growl.min.js}"></script>
+	<script th:src="@{/lib/sweetalert/sweetalert.min.js}"></script>
+	<script th:src="@{/lib/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js}"></script>
+	<script th:src="@{/lib/angular-nouislider/nouislider.min.js}"></script>
+
+	<script th:src="@{/lib/ng-table/ng-table.min.js}"></script>
+<!-- 	<script th:src="@{/lib/angular-google-chart/ng-google-chart.min.js}"></script> -->
+	<script th:src="@{/lib/ng-file-upload/ng-file-upload-shim.min.js}"></script> <!-- for no html5 browsers support -->
+	<script th:src="@{/lib/ng-file-upload/ng-file-upload.min.js}"></script>
+	<script th:src="@{/lib/ng-idle/angular-idle.min.js}"></script>
+
+    <script th:src="@{/lib/moment/moment.min.js}"></script>
+    <script th:src="@{/lib/fullcalendar/fullcalendar.min.js}"></script>
+
+	<!--/* Custom JS */-->
+	<script th:src="@{/js/app.js}" id="app-module"></script>
+	<script th:src="@{/js/config.js}"></script>
+	<script th:src="@{/js/services.js}"></script>
+	<script th:src="@{/js/wsService.js}"></script>
+	<script th:src="@{/js/controllers/main.js}"></script>
+	<script th:src="@{/js/controllers/ui-bootstrap.js}"></script>
+	<script th:src="@{/js/controllers/module.js}"></script>
+	
+	<!--/* Template Modules */-->
+	<script th:src="@{/js/modules/template.js}"></script>
+
+
+	<script th:src="@{/lib/d3/d3.min.js}"></script>
+	<script th:src="@{/lib/nvd3/nv.d3.js}"></script> <!-- or use another assembly -->
+	<script th:src="@{/lib/angular-nvd3/angular-nvd3.min.js}"></script>
+
+
+</head>
+<body data-ng-class="{ 'sw-toggled': mactrl.layoutType === '1'}" ng-init="init()">
+	<data ui-view></data>
+	<th:block th:replace="fragment/layout.html :: ie_warning"></th:block>
+</body>
+</html>

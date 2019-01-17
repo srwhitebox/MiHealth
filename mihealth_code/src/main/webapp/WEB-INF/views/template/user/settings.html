@@ -1,0 +1,45 @@
+<div class="pmb-block">
+    <div class="pmbb-header">
+        <h2><i class="zmdi zmdi-settings m-r-5"></i> [(#{settings})]</h2>
+
+        <ul class="actions" data-ng-if="pctrl.editInfo === 0">
+            <li class="dropdown" uib-dropdown>
+                <a href="" uib-dropdown-toggle>
+                    <i class="zmdi zmdi-more-vert"></i>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <a data-ng-click="pctrl.editInfo = 1" href="">[(#{edit})]</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="pmbb-body p-l-30">
+        <div class="pmbb-view" data-ng-if="pctrl.editInfo === 0">
+            <dl class="dl-horizontal">
+                <dt>[(#{language})]</dt>
+                <dd>{{curLocale.displayName}}</dd>
+            </dl>
+        </div>
+
+        <form data-ng-submit="pctrl.save(user)" class="pmbb-edit" data-ng-if="pctrl.editInfo === 1">
+            <dl class="dl-horizontal">
+                <dt class="p-t-10">[(#{language})]</dt>
+                <dd>
+					<div class="btn-group" style="box-shadow:none;" uib-dropdown>
+					    <button type="button" class="btn btn-default" style="background:transparent;"uib-dropdown-toggle> <i class="zmdi zmdi-globe-alt zmdi-hc-fw"></i> {{curLocale.displayName}}&nbsp;<span class="caret"></span></button>
+					    <ul class="dropdown-menu">
+					        <li data-ng-repeat="w in locales"><a href="" ng-click="setCurLocale($index)">{{ w.displayName }}</a></li>
+					    </ul>
+					</div>                
+                </dd>
+            </dl>
+            <div class="m-t-30" ng-hide="true">
+                <button class="btn btn-primary btn-sm" type="submit">[(#{save})]</button>
+                <button class="btn btn-link btn-sm" data-ng-click="pctrl.editInfo = 0" >[(#{cancel})]</button>
+            </div>
+        </form>
+    </div>
+</div>

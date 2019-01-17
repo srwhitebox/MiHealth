@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="appProperties"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="true" />
+        <property name="locations">
+        	<list>
+            	<value>/properties/path.mapping.properties</value>
+            	<value>/properties/jdbc.mysql.properties</value>
+            	<value>/properties/jpa.hibernate.properties</value>
+            	<value>/properties/mail.properties</value>
+            	<value>/properties/campus.properties</value>
+            </list>
+        </property>
+    </bean>
+		
+</beans>

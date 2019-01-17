@@ -1,0 +1,38 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<body>
+	<th:block th:fragment="dialog">
+		<div class="modal-header">
+			<h4 class="modal-title">[(#{add_property})]({{reference.language}})</h4>
+		</div>
+		<div class="modal-body">
+            <div class="form-group fg-line">
+            	<label for="cateogry">[(#{category})]</label>
+                <select id="cateogry" th:placeholder="#{placeholder_select_category}" class="form-control" ng-model="reference.category">
+                    <option ng-repeat="category in reference.categories" value="{{category.id}}">{{category.title}}</option>
+                </select>
+            </div>
+			<div class="form-group fg-line">
+			    <label for="code">[(#{code})]</label>
+			    <input type="text" class="form-control input-sm" id="code" th:placeholder="#{placeholder_code}" required ng-model="reference.code">
+			</div>
+			<div class="form-group fg-line">
+			    <label for="message">[(#{message})]</label>
+			    <input type="text" class="form-control input-sm" id="message" th:placeholder="#{placeholder_resource_message}" required ng-model="reference.value">
+			</div>
+			<div class="form-group fg-line">
+			    <label for="comment">[(#{comment})]</label>
+				<textarea class="form-control" rows="3" id="comment" th:placeholder="#{placeholder_comment}" ng-model="reference.comment"></textarea>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-link" ng-click="cancel()">Cancel</button>
+			<button class="btn btn-link" ng-click="ok()">Add</button>
+		</div>
+	</th:block>	
+</body>
+</html>

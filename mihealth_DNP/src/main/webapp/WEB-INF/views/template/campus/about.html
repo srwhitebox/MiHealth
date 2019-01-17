@@ -1,0 +1,124 @@
+<div class="pmb-block">
+    <div class="pmbb-header">
+        <h2><i class="zmdi zmdi-equalizer m-r-5"></i> [(#{basic_information})]</h2>
+
+        <ul class="actions" data-ng-if="!config.editMode.basic" th:if="${user.hasRole('ROLE_ADMIN')}">
+            <li class="dropdown" uib-dropdown>
+                <a href="" uib-dropdown-toggle>
+                    <i class="zmdi zmdi-more-vert"></i>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <a data-ng-click="config.editMode.basic = true" href="">[(#{edit})]</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="pmbb-body p-l-30">
+        <div class="pmbb-view" data-ng-if="!config.editMode.basic">
+            <dl class="dl-horizontal">
+                <dt>[(#{id})]</dt>
+                <dd>{{campus.campusId}}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>[(#{name})]</dt>
+                <dd>{{campus.name}}</dd>
+            </dl>
+        </div>
+
+        <form data-ng-submit="save(campus)" class="pmbb-edit" data-ng-if="config.editMode.basic">
+            <dl class="dl-horizontal">
+                <dt class="p-t-10">[(#{name})]</dt>
+                <dd>
+                    <div class="fg-line">
+                        <input data-ng-model="campus.campusId" type="text" class="form-control" th:placeholder="#{place_holder_campus_id}">
+                    </div>
+
+                </dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt class="p-t-10">[(#{name})]</dt>
+                <dd>
+                    <div class="fg-line">
+                        <input data-ng-model="campus.name" type="text" class="form-control" th:placeholder="#{place_holder_campus_name}">
+                    </div>
+                </dd>
+            </dl>
+            <div class="m-t-30">
+                <button class="btn btn-primary btn-sm" type="submit">[(#{save})]</button>
+                <button class="btn btn-link btn-sm" data-ng-click="config.editMode.basic = false" >[(#{cancel})]</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="pmb-block">
+    <div class="pmbb-header">
+        <h2><i class="zmdi zmdi-phone m-r-5"></i> [(#{contact})]</h2>
+
+        <ul class="actions" data-ng-if="!config.editMode.contact" th:if="${user.hasRole('ROLE_ADMIN')}">
+            <li class="dropdown" uib-dropdown>
+                <a href="" uib-dropdown-toggle>
+                    <i class="zmdi zmdi-more-vert"></i>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <a data-ng-click="config.editMode.contact = true" href="">[(#{edit})]</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="pmbb-body p-l-30">
+        <div class="pmbb-view" data-ng-if="!config.editMode.contact">
+            <dl class="dl-horizontal">
+                <dt>[(#{tel})]</dt>
+                <dd>{{ campus.properties.tel}}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>[(#{email_address})]</dt>
+                <dd>{{ campus.properties.email }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>[(#{address})]</dt>
+                <dd>{{ campus.properties.address }}</dd>
+            </dl>
+        </div>
+
+        <form data-ng-submit="save(campus)" class="pmbb-edit" data-ng-if="config.editMode.contact">
+            <dl class="dl-horizontal">
+                <dt class="p-t-10">[(#{tel})]</dt>
+                <dd>
+                    <div class="fg-line">
+                        <input data-ng-model="campus.properties.tel" type="text" class="form-control" th:placeholder="#{placeholder_telephone}">
+                    </div>
+                </dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt class="p-t-10">[(#{email_address})]</dt>
+                <dd>
+                    <div class="fg-line">
+                        <input data-ng-model="campus.properties.email" type="email" class="form-control" th:placeholder="#{placeholder_email}">
+                    </div>
+                </dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt class="p-t-10">[(#{address})]</dt>
+                <dd>
+                    <div class="fg-line">
+                        <input data-ng-model="campus.properties.address" type="text" class="form-control" th:placeholder="#{placeholder_address}">
+                    </div>
+                </dd>
+            </dl>
+
+            <div class="m-t-30">
+                <button class="btn btn-primary btn-sm" type="submit">[(#{save})]</button>
+                <button class="btn btn-link btn-sm" data-ng-click="config.editMode.contact = false" >[(#{cancel})]</button>
+            </div>
+        </form>
+    </div>
+</div>

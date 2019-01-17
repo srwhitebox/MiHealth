@@ -1,0 +1,155 @@
+<header id="header" data-current-skin={{mactrl.currentSkin}} data-ng-include="'fragment/layout/header'" data-ng-controller="headerCtrl as hctrl"></header>
+
+</header>
+<section id="main">
+	<th:block th:replace="fragment/layout.html :: sidebar"></th:block>
+
+    <section id="content" ng-style="mactrl.containerStyle()">
+
+        <div class="container">
+       		<div class="card" th:if="${!user.hasRole('ROLE_SUPERVISOR')}">
+               <div class="card-header ch-alt m-b-20">
+                   <h2>[(#{disease_statistics})]
+                   	<small style="text-align:right;">{{getPeriodString()}}</small>
+                   </h2>
+                   <ul class="actions">
+                       <li>
+                           <a tooltip-placement="bottom" th:attr="uib-tooltip=#{prev}" ng-click="moveTo(-1)">
+                               <i class="zmdi zmdi-chevron-left"></i>
+                           </a>
+                       </li>
+                       <li>
+                           <a tooltip-placement="bottom" th:attr="uib-tooltip=#{next}" ng-click="moveTo(1)">
+                               <i class="zmdi zmdi-chevron-right"></i>
+                           </a>
+                       </li>
+                       <li>
+                           <a tooltip-placement="bottom" th:attr="uib-tooltip=#{latest}" ng-click="setStatisticsFilter(statistics.period)">
+                               <i class="zmdi zmdi-time-restore-setting"></i>
+                           </a>
+                       </li>
+                       <li>
+                       		<a tooltip-placement="bottom" th:attr="uib-tooltip=#{refresh}" ng-click="reloadDiseaseStatiscs()">
+                            	<i class="zmdi zmdi-refresh-alt"></i>
+                            </a>
+                       </li>
+					<li class="dropdown" uib-dropdown>
+		                <a href="" uib-dropdown-toggle>
+		                    <i class="zmdi zmdi-more-vert"></i>
+		                </a>
+		
+		                <ul class="dropdown-menu dropdown-menu-right">
+		                    <li ng-class="{'active':statistics.period == 'day'}">
+		                        <a ng-click="setStatisticsFilter('day')">[(#{day})]</a>
+		                    </li>
+		                    <li ng-class="{'active':statistics.period == 'week'}">
+		                        <a ng-click="setStatisticsFilter('week')">[(#{week})]</a>
+		                    </li>
+		                    <li ng-class="{'active':statistics.period == 'month'}">
+		                        <a ng-click="setStatisticsFilter('month')">[(#{month})]</a>
+		                    </li>
+		                    <li ng-class="{'active':statistics.period == 'semester'}">
+		                        <a ng-click="setStatisticsFilter('semester')">[(#{semester})]</a>
+		                    </li>
+		                    <li ng-class="{'active':statistics.period == 'year'}">
+		                        <a ng-click="setStatisticsFilter('year')">[(#{year})]</a>
+		                    </li>
+		                    <li class="divider hidden-xs"></li>
+		                    <li ng-class="{'active':diseaseItems == 3}">
+		                        <a ng-click="setStatisticsItems(3)">[(#{top_3})]</a>
+		                    </li>
+		                    <li ng-class="{'active':diseaseItems == 5}">
+		                        <a ng-click="setStatisticsItems(5)">[(#{top_5})]</a>
+		                    </li>
+		                    <li ng-class="{'active':diseaseItems == 8}">
+		                        <a ng-click="setStatisticsItems(8)">[(#{top_8})]</a>
+		                    </li>
+		                    <li ng-class="{'active':diseaseItems == -1}">
+		                        <a ng-click="setStatisticsItems(-1)">[(#{view_all})]</a>
+		                    </li>
+<!-- 		                    <li> -->
+<!-- 		                        <a href="" ng-click="reloadDiseaseStatiscs()">[(#{refresh})]</a> -->
+<!-- 		                    </li> -->
+		                </ul>
+		            </li>		                        
+                   </ul>
+               </div>
+               <div class="card-body" style="padding-bottom: 15px;">
+               	<div class="row">
+               		<nvd3 class="col-sm-4" options="chartInternal.options" data="chartInternal.data"></nvd3>
+               		<nvd3 class="col-sm-4" options="chartSurgery.options" data="chartSurgery.data"></nvd3>
+               		<nvd3 class="col-sm-4" options="chartPlace.options" data="chartPlace.data"></nvd3>
+<!--                 	<div class="col-sm-4" google-chart chart="chartDiseaseInternal"></div> -->
+<!--                 	<div class="col-sm-4" google-chart chart="chartDiseaseSurgery"></div> -->
+<!--                 	<div class="col-sm-4" google-chart chart="chartDiseasePlace"></div> -->
+               	</div>
+               </div>
+       		</div>
+            <div class="row" th:if="${!user.hasRole('ROLE_SUPERVISOR')}">
+		        <div class="col-sm-8">
+		            <div class="card">
+		                <div class="card-header ch-alt m-b-20">
+		                    <h2>[(#{bmi_statistics})]<small>[(#{bmi_statistics_desc})]</small></h2>
+		                    <ul class="actions">
+		                        <li>
+		                            <a tooltip-placement="bottom" th:attr="uib-tooltip=#{refresh}" ng-click="getBmiReport()">
+		                                <i class="zmdi zmdi-refresh-alt"></i>
+		                            </a>
+		                        </li>
+		                    </ul>
+		                </div>
+		                <div class="card-body" style="padding-bottom: 15px;">
+		                	<div class="row">
+		                		<div class="col-sm-4">
+		                			<nvd3 options="chartBmiMale.options" data="chartBmiMale.data"></nvd3>
+		                		</div>
+			                    <div class="col-sm-4">
+									<div class="listview">
+						                <div class="lv-header" style="border:none; padding:0; margin-bottom:0;">
+						                    &nbsp;
+						                </div>
+						                <div class="lv-body" style="margin-top:88px;">
+											<table class="table table-condensed">
+												<tr ng-repeat = "row in chartBmiMale.data">
+							                        <td style="border:none; text-align: right;">{{row.value}}</td>
+							                        <td style="border:none; min-width: 100px; text-align: center; "><i class="zmdi zmdi-circle" ng-style="{'font-size':'10px', color:chartBmiFemale.options.chart.color[$index]}"></i>&nbsp;{{row.label}}</td>
+							                        <td style="border:none; text-align: left;">{{chartBmiFemale.data[$index].value}}</td>
+							                    </tr>
+												<tr >
+							                        <td style="border-top: 1px solid darkgray; text-align: right;">{{chartBmiMale.total}}</td>
+							                        <td style="border-top: 1px solid darkgray; text-align: center;">[(#{total})]</td>
+							                        <td style="border-top: 1px solid darkgray; text-align: left;">{{chartBmiFemale.total}}</td>
+							                    </tr>
+											</table>
+						                </div>
+						            </div>          		
+			                    </div>
+			                    <div class="col-sm-4">
+			                    	<nvd3 options="chartBmiFemale.options" data="chartBmiFemale.data"></nvd3>
+			                    </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+            	<div class="col-sm-4">
+		            <div class="card">
+		                <div class="card-header ch-alt m-b-20">
+		                    <h2>[(#{etc_statistics})]<small>[(#{etc_statistics_desc})]</small></h2>
+		                    <ul class="actions">
+		                        <li>
+		                            <a tooltip-placement="bottom" th:attr="uib-tooltip=#{refresh}" ng-click="getBmiReport()">
+		                                <i class="zmdi zmdi-refresh-alt"></i>
+		                            </a>
+		                        </li>
+		                    </ul>
+		                </div>
+		                <div class="card-body" style="padding-bottom: 15px;">
+		                </div>
+					</div>
+				</div>
+            </div>
+        </div>
+    </section>
+</section>
+
+<footer id="footer" data-ng-include="'fragment/layout/footer'"></footer>

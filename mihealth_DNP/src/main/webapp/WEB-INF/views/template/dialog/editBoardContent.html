@@ -1,0 +1,34 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<body>
+	<th:block th:fragment="dialog">
+		<div class="modal-header">
+			<h4 class="modal-title">[(#{content_info})]</h4>
+		</div>
+		<div class="modal-body">
+			<div class="form-group fg-line">
+	            <label for="board">[(#{category})]</label>
+                <select id="board" th:placeholder="#{placeholder_select_board}" class="form-control" ng-model="reference.content.boardUid">
+                    <option ng-repeat="(uid, name) in reference.boards" value="{{uid}}">{{name}}</option>
+                </select>
+            </div>		
+			<div class="form-group fg-line">
+			    <label for="title">[(#{content_title})]</label>
+			    <input type="text" class="form-control input-sm" id="title" th:placeholder="#{placeholder_title}" required ng-model="reference.content.title">
+			</div>
+			<div class="form-group fg-line">
+			    <label for="content">[(#{board_content})]</label>
+				<textarea ng-wig="reference.content.content" buttons="formats, list1, list2, bold, italic, link" source-mode-allowed class="nw-editor--fixed" id="content" th:placeholder="#{placeholder_content}"></textarea>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-link" ng-click="cancel()">[(#{cancel})]</button>
+			<button class="btn btn-link" ng-click="ok()">[(#{save})]</button>
+		</div>
+	</th:block>	
+</body>
+</html>

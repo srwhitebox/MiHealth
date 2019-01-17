@@ -1,0 +1,89 @@
+<div class="pmb-block">
+    <div class="pmbb-header">
+        <h2><i class="zmdi zmdi-settings m-r-5"></i> [(#{disease})]</h2>
+
+        <ul class="actions">
+			<a tooltip-placement="bottom" th:attr="uib-tooltip=#{refresh}" ng-click="reloadDiseaseData()">
+               	<i class="zmdi zmdi-refresh-alt"></i>
+			</a>
+        </ul>
+    </div>
+    <div class="pmbb-body p-l-30">
+            <div class="table-responsive">
+                <table ng-table="diseaseTable" class="table table-vmiddle">
+                    <tr ng-repeat-start="w in $data" ng-style="rowStyle($index, w)">
+                        <td th:title="'\''+#{medical_dept}+'\''" filter="{ 'deptId': 'text' }"  ng-click="showDetails(w)">
+                            {{ tctrl.getDeptName(w.deptId)}}
+                        </td>
+                        <td th:title="'\''+#{reg_no}+'\''" filter="{ 'regNo': 'text' }"  ng-click="showDetails(w)">
+                            {{ w.regNo}}
+                        </td>
+                        <td th:title="'\''+#{disease}+'\''" filter="{ 'disease': 'text' }"  ng-click="showDetails(w)">
+                            {{ tctrl.getDiseaseName(w.deptId, w.properties.disease)}}
+                        </td>
+                        <td th:title="'\''+#{nurse}+'\''" filter="{ 'nurse': 'text' }"  ng-click="showDetails(w)">
+                            {{ w.nurseName}}
+                        </td>
+                        <td th:title="'\''+#{registered_at}+'\''"  style="width:140px;" class="text-center" header-class="'text-center'" sortable = "'registeredAt'"  ng-click="showDetails(w)">
+                            {{ tctrl.toDate(w.registeredAt)|date:'short'}}
+                        </td>
+                        <td style="width:150px;" class="text-center">
+							<ul class="actions">
+								<li>
+									<a href="" ng-click="editTreatment(w)" tooltip-placement="bottom" th:attr="uib-tooltip=#{add_treatment_message}">
+										<i class="zmdi zmdi-collection-plus"></i>
+									</a>
+								</li>
+								<li>
+									<a href="" tooltip-placement="bottom" th:attr="uib-tooltip=#{edit}" ng-click="editDisease(w)">
+										<i class="zmdi zmdi-edit"></i>
+									</a>
+								</li>
+								<li>
+									<a href="" ng-click="removeDisease(w)" tooltip-placement="bottom" th:attr="uib-tooltip=#{remove}">
+										<i class="zmdi zmdi-close"></i>
+									</a>
+								</li>
+							</ul>
+                        </td>
+                    </tr>
+					<tr ng-repeat-end data-ng-show="w.showDetails" ng-style="rowStyle($index)">
+                    	<td colspan="10" style="padding:0px">
+                    		<div style="padding-left:20px; padding-right:20px; margin-bottom:4px;">
+	                    		<table class="table" style="background-color:rgba(0,188,212,0.1);">
+	                    			<tr data-ng-repeat="treatment in w.treatments">
+										<td style="width: 160px; padding-bottom:10px;">
+					    					{{tctrl.toDate(treatment.registeredAt)|date:'yyyy/MM/dd hh:mm'}}
+					    				</td>
+					    				<td style="padding-bottom:10px;">
+					    					{{treatment.treatment}}
+					    				</td>
+					    				<td style="width: 140px; padding-bottom:10px;">
+					    					{{treatment.nurseName}}
+					    				</td>
+					    				<td style="width: 140px; padding-bottom:10px;">
+					    					Opened
+					    				</td>
+					    				<td style="width: 124px; padding-bottom:10px;">
+											<ul class="actions">
+												<li>
+													<a href="" tooltip-placement="bottom" uib-tooltip="[(#{edit})]" ng-click="editTreatment(w, treatment)" >
+														<i class="zmdi zmdi-edit"></i>
+													</a>
+												</li>
+												<li>
+													<a href="" ng-click="removeTreatment(treatment.uid)" tooltip-placement="bottom" uib-tooltip="[(#{remove})]">
+														<i class="zmdi zmdi-close"></i>
+													</a>
+												</li>
+											</ul>
+					    				</td>
+					    			</tr>
+	                    		</table>
+                    		</div>                    		
+                    	</td>
+                    </tr>					
+                </table>
+            </div>
+    </div>
+</div>

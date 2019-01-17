@@ -1,0 +1,48 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<body>
+	<th:block th:fragment="user">
+		<li class="btn-wave" data-ui-sref-active="active">
+			<a data-ui-sref="user.profile.about">[(#{general})]</a>
+		</li>
+		<li class="btn-wave" data-ui-sref-active="active">
+			<a data-ui-sref="user.profile.accounts">[(#{account})]</a>
+		</li>
+		<li class="btn-wave" data-ui-sref-active="active">
+			<a data-ui-sref="user.profile.settings">[(#{settings})]</a>
+		</li>
+	</th:block>	
+
+	<th:block th:fragment="campus">
+		<li class="btn-wave" data-ui-sref-active="active">
+			<a data-ui-sref="campus.profile.about">[(#{general})]</a>
+		</li>
+		<li class="btn-wave" data-ui-sref-active="active" th:if="${user.hasRole('ROLE_ADMIN')}">
+			<a data-ui-sref="campus.profile.settings">[(#{settings})]</a>
+		</li>	
+	</th:block>	
+
+	<th:block th:fragment="student">
+		<li class="btn-wave" data-ui-sref-active="active">
+			<a data-ui-sref="student.profile.about">[(#{general})]</a>
+		</li>
+		<li class="btn-wave" data-ui-sref-active="active">
+			<a data-ui-sref="student.profile.measurement">[(#{measurement})]</a>
+		</li>
+		<li class="btn-wave" data-ui-sref-active="active">
+			<a data-ui-sref="student.profile.disease">[(#{disease})]</a>
+		</li>
+	</th:block>	
+
+	<th:block th:fragment="fragment">
+		<li class="btn-wave" data-ui-sref-active="active"><a data-ui-sref="pages.profile.profile-about">About</a></li>
+		<li class="btn-wave" data-ui-sref-active="active"><a data-ui-sref="pages.profile.profile-timeline">Timeline</a></li>
+		<li class="btn-wave" data-ui-sref-active="active"><a data-ui-sref="pages.profile.profile-photos">Photos</a></li>
+		<li class="btn-wave" data-ui-sref-active="active"><a data-ui-sref="pages.profile.profile-connections">Connections</a></li>	
+	</th:block>	
+</body>
+</html>

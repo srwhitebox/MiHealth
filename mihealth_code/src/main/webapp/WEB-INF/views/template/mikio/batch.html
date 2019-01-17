@@ -1,0 +1,112 @@
+<div class="container" data-ng-controller="mikioCtrl as tctrl">
+    <div class="card" ng-init="init()">
+    	<div class="listview lv-bordered lv-lg">
+	    	<div class="lv-header-alt clearfix">
+	    		<h2 class="lvh-label hidden-xs">[[#{batch_measurement}]]</h2>
+		    	<ul class="lv-actions actions">
+		    		<li ng-if="grades">
+						<div class="input-group" style="width:120px;">
+	                        <span class="input-group-addon">[[#{grade}]]</i></span>
+	                        <div class="fg-line">
+								<select id="grade" class="form-control" style="text-align-last: center;" ng-model="curMikio.properties.grade" ng-options="grade for grade in grades" ng-change="loadClassIds()">
+				                </select>
+							</div>
+                    	</div>    		
+		    		</li>
+		    		<li ng-if="classIds">
+						<div class="input-group" style="width:120px;">
+	                        <span class="input-group-addon">[[#{class}]]</i></span>
+	                        <div class="fg-line">
+								<select id="classId" class="form-control" style="text-align-last: center;" ng-model="curMikio.properties.classId" ng-options="classId for classId in classIds" ng-change="loadStudents()">
+				                </select>
+							</div>
+                    	</div>    		
+		    		</li>
+		    		<li ng-if="classIds">
+						<div class="input-group" style="width:120px;">
+	                        <span class="input-group-addon">[[#{total}]]</i></span>
+	                        <div class="fg-line">
+								<input type="number" class="form-control" style="text-align: center;" ng-model="students.length">
+							</div>
+                    	</div>    		
+		    		</li>
+		    		<li ng-if="classIds">
+						<div class="input-group" style="width:120px;">
+	                        <span class="input-group-addon">[[#{absent}]]</i></span>
+	                        <div class="fg-line">
+								<input type="number" class="form-control" style="text-align: center;" ng-model="filteredStudents().length">
+							</div>
+                    	</div>    		
+		    		</li>
+		    		<li>
+		    			<button class="btn btn-primary btn-icon-text" style="margin-top: -30px; height: 35px; margin-left: 10px;" ng-click="pushStudents()"><i class="zmdi zmdi-mail-send"></i> [(#{push})]</button>
+		    		</li>
+		    		<li>
+		    			<button class="btn btn-primary btn-icon-text" style="margin-top: -30px; height: 35px; margin-left: 10px;" ng-click="resetStudents()"><i class="zmdi zmdi-close"></i> [(#{reset})]</button>
+		    		</li>
+		    	</ul>
+	    	</div>
+
+	    	<div class="lv-body">
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<thead>
+							<th style="width: 62px;">
+								<div class="checkbox">
+			                        <label>
+			                            <input type="checkbox" value="">
+			                            <i class="input-helper"></i>
+			                        </label>
+			                    </div>
+							</th>
+							<th style="width: 160px;">[(#{national_id})]</th>
+							<th style="width: 160px;">[(#{student_no})]</th>
+							<th style="width: 80px;">[(#{school_year})]</th>
+							<th style="width: 80px;">[(#{grade})]</th>
+							<th style="width: 80px;">[(#{class})]</th>
+							<th style="width: 80px;">[(#{seat_no})]</th>
+							<th>[(#{name})]</th>
+							<th style="width: 110px; text-align=right">[(#{action})]</th>
+						</thead>
+						<tbody>
+							<tr ng-repeat="student in students">
+								<td>
+									<div class="checkbox">
+				                        <label>
+				                            <input type="checkbox" value="" ng-model="student.isAbsent">
+				                            <i class="input-helper"></i>
+				                        </label>
+				                    </div>
+								</td>
+								<td style="vertical-align: middle; text-align: left;">{{student.nationalId}}</td>
+								<td style="vertical-align: middle; text-align: left;">{{student.studentNo}}</td>
+								<td style="vertical-align: middle; text-align: center;">{{student.schoolYear | number}}</td>
+								<td style="vertical-align: middle; text-align: center;">{{student.grade | number}}</td>
+								<td style="vertical-align: middle; text-align: center;">{{student.classId}}</td>
+								<td style="vertical-align: middle; text-align: center;">{{student.seat | number}}</td>
+								<td style="vertical-align: middle; text-align: left;">{{student.name}}</td>
+								<td style="vertical-align: middle; text-align: right;">
+									<ul class="actions">
+										<li ng-hide="$first">
+											<a href="" ng-click="moveUp($index)" tooltip-placement="bottom" th:attr="uib-tooltip=#{move_up}">
+												<i class="zmdi zmdi-chevron-up"></i>
+											</a>
+										</li>
+										<li ng-hide="$last">
+											<a href="" ng-click="moveDown($index)" tooltip-placement="bottom" th:attr="uib-tooltip=#{move_down}">
+												<i class="zmdi zmdi-chevron-down"></i>
+											</a>
+										</li>
+									</ul>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>	    	
+
+    	</div>
+    </div>        
+</div>
+
+

@@ -1,0 +1,58 @@
+<div class="pmb-block">
+    <div class="pmbb-header">
+        <h2><i class="zmdi zmdi-accounts m-r-5"></i> [(#{account})]</h2>
+
+        <ul class="actions">
+            <li class="dropdown" uib-dropdown>
+                <a href="" uib-dropdown-toggle>
+                    <i class="zmdi zmdi-more-vert"></i>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <a data-ng-click="editAccount(user, null, 'new')" href="">[(#{add})]</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="pmbb-body p-l-0">
+		<table ng-table="table" class="table table-striped table-vmiddle">
+          	<tr data-ng-repeat="account in $data">
+				<td style="padding-bottom:10px;" th:title="'\''+#{id}+'\''">
+	                <span ng-if="!account.$edit">{{ account.id }}</span>
+	                <div ng-if="account.$edit"><input class="form-control" type="text" ng-model="account.id" /></div>
+				</td>
+				<td style="width: 160px;" th:title="'\''+#{id_type}+'\''">
+					{{account.idType}}
+				</td>
+				<td style="width: 100px;" th:title="'\''+#{activated}+'\''">
+	                  <div class="toggle-switch">
+	                  	<input id="activated_{{account.uid}}" type="checkbox" hidden="hidden" ng-model="account.activated" ng-change="activate(account)">
+	                  	<label for="activated_{{account.uid}}" class="ts-helper"></label>
+	              	</div>
+				</td>
+				<td style="width: 154px;">
+					<ul class="actions">
+						<li>
+							<a href="" tooltip-placement="bottom" th:attr="uib-tooltip=#{edit}" ng-click="editAccount(user, account, 'edit')" >
+								<i class="zmdi zmdi-edit"></i>
+							</a>
+						</li>
+						<li>
+							<a href="" tooltip-placement="bottom" ng-style="{'visibility': needPassword(account) ? 'visible':'hidden'}" th:attr="uib-tooltip=#{change_password}" ng-click="editAccount(user, account, 'password')">
+								<i class="zmdi zmdi-key"></i>
+							</a>
+						</li>
+						<li>
+							<a href="" ng-click="removeAccount(account.id)" tooltip-placement="bottom" th:attr="uib-tooltip=#{remove}">
+								<i class="zmdi zmdi-close"></i>
+							</a>
+						</li>
+					</ul>
+				</td>
+			</tr>
+		</table>
+    	
+    </div>
+</div>
